@@ -1,0 +1,191 @@
+﻿   <!-- ======= Header/Navbar ======= -->
+<header>
+    <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+        <div class="container">
+
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Buy">خرید</a>
+
+                <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Rent">اجاره</a>
+
+                <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+
+                <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <div class="text-light">
+                        <i class="bi bi-gear"></i>
+                        مدیریت محتوا
+                    </div>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="Pages" asp-action="Index">
+                        <i class="bi bi-house-gear-fill"></i>
+                        مشاهده املاک
+
+                    </a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="bi bi-person-lines-fill"></i> کاربران</a>
+
+                }
+
+                <hr class="text-light" />
+                <partial name="_LoginPartialSidebar" />
+            </div>
+
+            <button id="Sidebar" class="btn" onclick="openNav()">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <a class="navbar-brand text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                <img src="~/Images/Header3.png" width="75" height="75" alt="لوگو املاک حمید" />
+            </a>
+
+            <nav class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">املاک</a>
+                        <div class="dropdown-menu ">
+                            <a class="dropdown-item text-end" asp-area="Customer" asp-controller="Home" asp-action="Buy">خرید</a>
+                            <a class="dropdown-item text-end" asp-area="Customer" asp-controller="Home" asp-action="Rent">اجاره</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+                    </li>
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                <i class="bi bi-gear"></i>
+                                مدیریت محتوا
+                            </a>
+                            <div class="dropdown-menu ">
+                                <a class="dropdown-item text-end" asp-area="Admin" asp-controller="Pages" asp-action="Index">
+                                    <i class="bi bi-house-gear-fill"></i>
+                                    مشاهده املاک
+
+                                </a>
+                                <a class="dropdown-item text-end" asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="bi bi-person-lines-fill"></i> کاربران</a>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </nav>
+
+            <partial name="_LoginPartial" />
+            <partial name="_AdRegPartial" />
+
+        </div>
+    </nav>
+</header>
+<!-- End Header/Navbar -->
+@section Scripts {
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+}
+
+
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom  fixed-top bg-white">
+
+
+    <div id="mySidenav" class=" bg-dark" data-pushbar-id="mypushbar1" data-pushbar-direction="right">
+        <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Buy">خرید</a>
+
+        <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Rent">اجاره</a>
+
+        <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+
+        <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="text-light">
+                <i class="bi bi-gear"></i>
+                مدیریت محتوا
+            </div>
+            <a class="nav-link text-light" asp-area="Admin" asp-controller="Pages" asp-action="Index">
+                <i class="bi bi-house-gear-fill"></i>
+                مشاهده املاک
+
+            </a>
+            <a class="nav-link text-light" asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="bi bi-person-lines-fill"></i> کاربران</a>
+
+        }
+
+        <hr class="text-light" />
+        <partial name="_LoginPartialSidebar" />
+
+    </div>
+
+    <div class="pushbar_main_content">
+
+        <button id="Sidebar" class="btn" data-pushbar-target="mypushbar1">
+            <i class="bi bi-list"></i>
+
+        </button>
+    </div>
+
+
+    <div class="col-md-3 mb-2 mb-md-0">
+        <a class="d-inline-flex link-body-emphasis text-decoration-none" asp-area="Customer" asp-controller="Home" asp-action="Index">
+            <img src="~/Images/Header3.png" width="75" height="75" alt="لوگو املاک حمید" />
+        </a>
+    </div>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+
+        <li>
+            <a class="nav-link px-2 link-secondary" asp-area="Customer" asp-controller="Home" asp-action="Buy">خرید</a>
+        </li>
+        <li>
+            <a class="nav-link px-2 link-secondary" asp-area="Customer" asp-controller="Home" asp-action="Rent">اجاره</a>
+        </li>
+        <li>
+            <a class="nav-link px-2 " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+        </li>
+        <li><a class="nav-link px-2 " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a></li>
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <i class="bi bi-gear"></i>
+                    مدیریت محتوا
+                </a>
+                <div class="dropdown-menu ">
+                    <a class="dropdown-item text-end" asp-area="Admin" asp-controller="Pages" asp-action="Index">
+                        <i class="bi bi-house-gear-fill"></i>
+                        مشاهده املاک
+
+                    </a>
+                    <a class="dropdown-item text-end" asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="bi bi-person-lines-fill"></i> کاربران</a>
+                </div>
+            </li>
+
+            <li>
+                <a class="nav-link px-2 link-secondary" asp-area="Customer" asp-controller="Home" asp-action="Rent">اجاره</a>
+            </li>
+            <li>
+                <a class="nav-link px-2 " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+            </li>
+        }
+
+    </ul>
+    <div class="col-md-3 text-end">
+        <partial name="_LoginPartial" />
+        <partial name="_AdRegPartial" />
+    </div>
+
+
+</header>

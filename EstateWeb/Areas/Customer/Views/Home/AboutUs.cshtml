@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "درباره ما";
+    ViewData["Canonical"] = ViewBag.Canonical;
+
+    ViewData["Description"] = "املاک حمید، با سال‌ها تجربه در حوزه خرید و فروش و اجاره ملک، به شما خدماتی حرفه‌ای و مشتری محور ارائه می‌دهد. ما به دنبال دستیابی به بهترین نتایج برای مشتریان خود هستیم. ";
+    @section Styles
+    {
+        <style>
+            .mask {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-attachment: fixed;
+            }
+
+            .bg-image {
+                position: relative;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+            }
+        </style>
+
+    }
+}
+<!-- Hero -->
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('/images/home/hero_bg_3.jpg');
+    height: 50vh;
+  ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="display-5 fw-bold fs-2 text-white">@ViewData["Title"]</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="text-center">
+                    <img src="/images/logo.jpg" class="my-2 rounded-circle" width="100" height="100" />
+                    <p class="lead text-dark text-justify">
+                        برند فوق تخصصی املاک حمید از سال 1394 در شهر رشت، منطقه 1 شروع به فعالیت نموده و طی این 9 سال با شعار صداقت، دقت و سرعت برای ارائه خدمات ملکی برای رضایت هرچه بیشتر مشتریان عزیز خود در حال انجام هستیم.
+                        امیدواریم که بتوانیم با ارائه صفات متمایز به شما عزیزان محترم بتوانیم برندی معتبر در حوزه املاک و مستغلات در شمال کشور ایجاد کرده و شما بتوانید براحتی و بدون دغدغه برای تهیه ملک اقدام نمایند.
+
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

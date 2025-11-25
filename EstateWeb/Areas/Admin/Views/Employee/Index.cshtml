@@ -1,0 +1,224 @@
+﻿@model IEnumerable<Estate.Models.Page>
+
+@{
+    ViewData["Title"] = "لیست املاک";
+
+    var isRentVisible = ViewBag.Employee.isRent || ViewBag.Employee.isOnlyRent ? "true" : "false";
+    var isBuyVisible = !ViewBag.Employee.isRent || ViewBag.Employee.isOnlyRent ? "true" : "false";
+    var canDelete = ViewBag.Employee.permisionDelete ? "true" : "false";
+    var canEdit = ViewBag.Employee.permisionEdit ? "true" : "false";
+}
+
+<partial name="_Notifications" />
+
+<h1 class="pt-5">املاک</h1>
+
+<div class="my-3">
+    @if (isRentVisible == "true")
+    {
+        <a asp-action="CreateRent" class="btn btn-outline-primary">ایجاد آگهی اجاره</a>
+
+    }
+    @if (isBuyVisible == "true")
+    {
+        <a asp-action="CreateBuy" class="btn btn-outline-primary">ایجاد آگهی فروش</a>
+
+
+    }
+</div>
+
+<table id="tblData" class="table table-bordered table-striped nowrap">
+    <thead>
+        <tr>
+            <th>کد صفحه</th>
+            <th>عکس</th>
+            <th>عنوان</th>
+            <th>آدرس</th>
+            
+                <th>قیمت کل</th>
+                <th>متری</th>
+            
+            <th>متراژ</th>
+            
+                <th>ودیعه</th>
+                <th>اجاره</th>
+            
+            <th> نمایش</th>
+            <th> ویژه</th>
+            <th> ملک</th>
+            <th> تاریخ ثبت</th>
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            loadDataTable();
+        });
+        function loadDataTable() {
+            dataTable = $('#tblData').DataTable({
+                "ajax": { url: '/admin/employee/GetAll?username=@User.Identity.Name' },
+                scrollX: true,
+                language: {
+                    "decimal": "",
+                    "emptyTable": "داده ای موجود نیست",
+                    "info": "نمایش _START_ تا _END_ از _TOTAL_ مورد",
+                    "infoEmpty": "نمایش 0 تا 0 از 0 لیست",
+                    "infoFiltered": "(فیلتر از _MAX_ موارد)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "تعداد _MENU_ درحال نمایش",
+                    "loadingRecords": "در حال بارگزاری ...",
+                    "processing": "",
+                    "search": "جستجو: ",
+                    "zeroRecords": "نتیجه ای یافت نشد",
+                    "paginate": {
+                        "first": "اولین",
+                        "last": "اخرین",
+                        "next": "بعد",
+                        "previous": "قبل"
+                    },
+                    "aria": {
+                        "orderable": "نمایش برا اساس این ستون",
+                        "orderableReverse": "نمایش معکوس بر اساس این ستون"
+                    }
+                },
+                "columns": [
+                    {
+                        data: 'pageId', "render": function (data) {
+                            var res = `<p style="text-align:center;">${data}</p>
+                                            <div class="w-75 btn-group" role="group">`;
+                            if (@canEdit){
+
+                                res += `<a href="/admin/employee/edit?id=${data}" class="btn btn-primary mx-2">
+                                                   <i class="bi bi-pencil-square"></i>
+                                                   </a>`;
+                            }
+                            if(@canDelete){
+                                res += `<a href="/admin/employee/delete?id=${data}" class="btn btn-danger mx-2">
+                                                   <i class="bi bi-trash-fill"></i>
+                                                   </a>`;
+                            }
+                            res += `
+                                                   <a href="/Customer/Home/Property?pageId=${data}" class="btn btn-info mx-2">
+                                                   <i class="bi bi-eye-fill"></i>
+                                                   </a>
+                                            </div>`;
+
+
+                            return res;
+                        }, "width": "5%"
+                    },
+                    {
+                        data: 'imageUrl',
+                        "render": function (data) {
+                            if (data) {
+                                data = `<img src="${data}" width="100" height="100" style="object-fit: cover;object-position: 50% 50%;" />`
+                            }
+                            else {
+                                data = `<img src="/images/logo.jpg" width="100" height="100" style="object-fit: cover;object-position: 50% 50%;" />`
+
+                            }
+                            return data
+
+
+
+                        }
+                        , "width": "1%"
+                    },
+                    { data: 'title', "width": "1%" },
+                    { data: 'address', "width": "1%" },
+                    {
+                        data: 'priceTotal', "width": "1%", visible: @isBuyVisible ,"render": function(data) {
+
+                            var amount = parseFloat(data); // Convert string into float number
+                            var newamount = amount.toLocaleString('en-US'); // add comma
+                            data = `<div>${newamount}</div>
+                                    <div>${wordifyfa(data)}</div>`;
+                            
+                            return data
+                        }
+                    },
+                    {
+                        data: 'priceMeter', "width": "1%", visible: @isBuyVisible, "render": function (data) {
+
+                            var amount = parseFloat(data); // Convert string into float number
+                            var newamount = amount.toLocaleString('en-US'); // add comma
+                            data = `<div>${newamount}</div>
+                                            <div>${wordifyfa(data)}</div>`;
+
+                            return data
+                        }
+                    },
+                    { data: 'meterage', "width": "1%" },
+                    {
+                        data: 'deposit', "width": "1%", visible: @isRentVisible, "render": function (data) {
+
+                            var amount = parseFloat(data); // Convert string into float number
+                            var newamount = amount.toLocaleString('en-US'); // add comma
+                            data = `<div>${newamount}</div>
+                                            <div>${wordifyfa(data)}</div>`;
+
+                            return data
+                        }
+                    },
+
+                    {
+                        data: 'rent', "width": "1%", visible: @isRentVisible, "render": function (data) {
+
+                            var amount = parseFloat(data); // Convert string into float number
+                            var newamount = amount.toLocaleString('en-US'); // add comma
+                            data = `<div>${newamount}</div>
+                                            <div>${wordifyfa(data)}</div>`;
+
+                            return data
+                        }
+                    },
+                    {
+                        data: 'isActive', "render": function (data) {
+                            if (data) {
+                                data = `<i class="bi bi-eye"></i> فعال`;
+                            } else {
+                                data = `<i class="bi bi-eye-slash"></i> غیرفعال`;
+                            }
+                            return data
+                        }, "width": "5%"
+                    },
+                    {
+                        data: 'isFeatured', "render": function (data) {
+                            if (data) {
+                                data = `<i class="bi bi-star-fill"></i> ویژه`;
+                            } else {
+                                data = `<i class="bi bi-star"></i> عادی`;
+                            }
+                            return data
+                        }, "width": "5%"
+                    },
+                    {
+                        data: 'isRent', "render": function (data) {
+                            if (data) {
+                                data = `اجاره`;
+                            } else {
+                                data = `خرید`;
+                            }
+                            return data
+                        }, "width": "5%"
+                    },
+                    {
+                        data: 'date', "render": function (data) {
+                            data = new Date(data).toLocaleDateString("fa-IR") + "  " + new Date(data).toLocaleTimeString("fa-IR")
+                            return data
+                        }, "width": "5%"
+                    },
+
+
+
+                ]
+            });
+        }
+
+    </script>
+}

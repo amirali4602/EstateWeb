@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "صفحه مشاور";
+    dynamic pageDate = ViewBag.pageDate;
+    pageDate = pageDate.Split("*");
+    var pageDate_i = 0;
+}
+
+
+<div class="section section-properties" style="padding-top:3rem">
+    <div class="container">
+        <div class="card mb-3  border-0 shadow p-3 mb-5 bg-body-tertiary rounded" style="max-width: 400px;">
+            <div class="row g-0">
+                <div class="col-4">
+                    <img loading="lazy" src="@ViewBag.Employee.profilePic"
+                         alt="@ViewBag.Employee.Name"
+                         class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" width="200" />
+
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <p class="card-title fs-2">@ViewBag.Employee.Name</p>
+                        <p class="mb-0 mb-2  fs-5">@ViewBag.Employee.Role</p>
+                        <p class="mb-0 mb-2">شماره تماس</p>
+                        <a class="meta mb-3 text-dark btn btn-outline-primary" href="tel:@ViewBag.Employee.Number">@ViewBag.Employee.Number</a>
+                        <ul class="list-unstyled list-inliner social text-right">
+                            @if (ViewBag.Employee.telegram != null)
+                            {
+
+                                <li class="list-inline-item">
+                                    <a href="tg://resolve?domain=@ViewBag.Employee.telegram" class=" bg-white">
+                                        <i class="icons8-telegram-app">تلگرام</i>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.Employee.instagram != null)
+                            {
+                                <li class="list-inline-item">
+                                    <a href="https://www.instagram.com/@ViewBag.Employee.instagram" class="bg-white">
+                                        <i class="icons8-instagram">اینستاگرام</i>
+
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.Employee.whatsApp != null)
+                            {
+
+                                <li class="list-inline-item">
+                                    <a href="https://wa.me/@(ViewBag.Employee.whatsApp)" class="bg-white">
+                                        <i class="icons8-whatsapp">واتس اپ</i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            @{
+                int p = 0;
+                int mapP = 1000;
+            }
+            @foreach (var page in Model)
+            {
+                var pageImage = "/images/logo.jpg";
+                if (page.ImageUrl != null)
+                {
+                    pageImage = page.ImageUrl;
+                }
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  py-2">
+                    <div class="card h-100 w-100">
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Property" asp-route-PageId="@(page.PageId)" class="img position-relative">
+                            <img src="@(pageImage)" class="card-img-top cropped-ofp" alt="@(page.Title)" loading="lazy" />
+                            @if (page.Sold)
+                            {
+                                <img src="\Images\Home\Selled.png" alt="فروخته شد" loading="lazy" width="254" height="200" title="فروخته شد" class="sold position-absolute top-50 start-50 translate-middle">
+                            }
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title fs-5">@(page.Title)</h3>
+                            <p class="card-text">
+                                <span class="fs-6 text-dark fw-bold">
+                                    @{
+                                        if (!page.isRent)
+                                        {
+                                            Write("قیمت : " + page.PriceTotal.ToString("N0") + " تومان");
+                                        }
+                                        else if (page.Deposit != 0 && page.Rent != 0)
+                                        {
+                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان" + "\n" + "اجاره : " + page.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                        else if (page.Deposit != 0)
+                                        {
+                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان");
+                                        }
+                                        else if (page.Rent != 0)
+                                        {
+                                            Write("اجاره : " + page.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                    }
+
+                                </span>
+
+
+
+                                <span class="d-block text-dark">
+                                    <span class="icons8-location mx-2"> </span>
+
+                                    @(page.Address)
+                                </span>
+
+                                <div class="specs d-flex mb-4 base-infos text-dark">
+                                    <span class="d-block d-flex align-items-center me-3">
+                                        <span class="icons8-bed-I mx-2"> </span>
+                                        <span class="caption"> @(page.Rooms) اتاق</span>
+                                    </span>
+                                    <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-metere mx-2"> </span>
+
+                                        <span class="caption">@(page.Meterage) متر</span>
+                                    </span>
+                                    <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-construction mx-2"> </span>
+
+                                        <span class="caption"> ساخت @(page.Year)</span>
+                                    </span>
+                                </div>
+                            </p>
+
+                        </div>
+                        <div class="card-footer text-dark">
+
+                            <i class="bi bi-clock-history"></i>
+                            <span class="caption">@(pageDate[pageDate_i])</span>
+
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Property" asp-route-pageId="@(page.PageId)"
+                               class="btn btn-primary py-2 px-3 float-start">مشاهده</a>
+
+                        </div>
+                    </div>
+
+                    <!-- .item -->
+                </div>
+                p++;
+                if (mapP <= p)
+                {
+                    break;
+                }
+                pageDate_i++;
+
+            }
+        </div>
+
+
+
+    </div>
+</div>

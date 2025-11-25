@@ -1,0 +1,463 @@
+﻿@model IEnumerable<Page> 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "گروه مشاورین تخصصی املاک حمید رشت";
+
+    ViewData["Canonical"] = ViewBag.Canonical;
+
+    ViewData["Description"] = "ارائه متمایز خدمات ملکی در دپارتمان تخصصی املاک حمید در استان گیلان و منطقه 1 رشت ";
+    dynamic featuredesDate = ViewBag.featuredsDate;
+    featuredesDate = featuredesDate.Split("*");
+    var featuredesDate_i = 0;
+    @section Styles
+    {
+        <link rel="stylesheet" href="/lib/Swiper/Swiper.css" />
+        <style>
+            .mask{
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-attachment: fixed;
+            }
+            .bg-image{
+                position: relative;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+            }
+            </style>
+        <script type="application/ld+json">
+            [
+                {
+                    "@@context": "https://schema.org",
+                    "@@type": "Corporation",
+                    "id": "https://www.hamid-estate.com/#corporation",
+                    "name": "‌املاک حمید",
+                    "alternateName": [
+                        "املاک حمید",
+                        "hamid real estate"
+                    ],
+                    "legalName": "املاک حمید",
+                    "url": "https://www.hamid-estate.com",
+                    "logo": "",
+                    "email": "info@@hamid-estate.com",
+                    "sameAs": [
+                        "https://wa.me/989382051815",
+                        "https://www.instagram.com/amlak_hamid",
+                        "https://www.aparat.com/Hamid_Estate",
+                        "https://eitaa.com/Amlake_Hamid_Rasht",
+                        "https://rubika.ir/Amlake_Hamid_Rasht"
+                    ],
+                    "contactPoint": {
+                        "@@type": "ContactPoint",
+                        "telephone": "+989382051815",
+                        "contactType": "customer service",
+                        "areaServed": "IR",
+                        "availableLanguage": "Persian"
+                    },
+                    "address": {
+                        "@@type": "PostalAddress",
+                        "streetAddress": "Gilan Province, Rasht, Sargol Square, Ali Tanha Street, corner of 10th Alley, Hamid Real Estate",
+                        "addressLocality": "Gilan, Iran",
+                        "postalCode": "4158654737",
+                        "areaServed": {
+                            "@@context": "https://schema.org",
+                            "@@type": "Place",
+                            "geo": {
+                                "@@type": "GeoCoordinates",
+                                "latitude": "37.29107097",
+                                "longitude": "49.57479791"
+                            },
+                            "hasMap": "https://maps.app.goo.gl/HqWjZNjdEuY2DZvg6"
+                        },
+                        "addressCountry": {
+                            "@@type": "Country",
+                            "name": "Iran"
+                        }
+                    }
+                },
+                {
+                    "@@context": "https://schema.org",
+                    "@@type": "WebSite",
+                    "id": "https://www.hamid-estate.com/#webSite",
+                    "name": "‌املاک حمید",
+                    "url": "https://www.hamid-estate.com",
+                    "copyrightHolder": {
+                        "@@type": "Corporation",
+                        "id": "https://www.hamid-estate.com/#corporation",
+                        "name": "املاک حمید"
+                    },
+                    "creator": {
+                        "@@type": "Corporation",
+                        "id": "https://www.hamid-estate.com/#corporation",
+                        "name": "املاک حمید"
+                    }
+                }
+            ]
+            </script>
+    }
+}
+<!-- Hero -->
+<div class="p-5 text-center bg-image rounded-3" id="Hero-img" style="
+    background-image: url('/images/home/Hero.webp?val=1');
+    height: 100vh;
+  ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin)))
+                {
+                    <h1 class="heading fs-2" data-aos="fade-up">
+                        <a class="nav-link text-light" asp-area="Admin" asp-controller="Employee" asp-action="Index" title="ثبت آگهی">
+                            آگهی خود را بصورت رایگان ثبت کنید
+
+                        </a>
+                    </h1>
+
+                }
+                else if (SignInManager.IsSignedIn(User))
+                {
+
+                    <h1 class="heading fs-2" data-aos="fade-up">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="Ads" asp-action="Index" title="ثبت آگهی">
+                            آگهی خود را بصورت رایگان ثبت کنید
+
+                        </a>
+                    </h1>
+                }
+                else
+                {
+                    <h1 class="heading fs-2" data-aos="fade-up">
+                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login" title="ثبت آگهی">
+                            آگهی خود را بصورت رایگان ثبت کنید
+
+                        </a>
+                    </h1>
+                }
+
+                <h2 class="text-white fs-2" data-aos="fade-up">
+                    سریعترین راه برای رسیدن به خانه رویاهایتان
+                </h2>
+                <form asp-action="buy"
+                      class="narrow-w form-search d-flex align-items-stretch mb-3"
+                      data-aos="fade-up"
+                      data-aos-delay="200">
+                    <input type="text"
+                           class="form-control px-4 rounded-pill"
+                           placeholder="آدرس مورد نظر شما برای مثال رشت ,معلم" name="query" />
+                    <button type="submit" class="btn btn-primary rounded-circle" aria-label="جستجو"><i class="bi bi-search-heart"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container my-5">
+    <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 pb-4">
+        ملک ویژه
+    </h2>
+    <!-- Swiper -->
+    <div dir="rtl" class="swiper mySwiperFeatured ">
+        <div class="swiper-wrapper ">
+
+            @foreach (var featured in Model)
+            {
+                var featuredImage = "/images/logo.jpg";
+                if (featured.ImageUrl!=null){
+                    featuredImage = featured.ImageUrl;
+                }
+                <!-- .item (featured.ImageUrl)-->
+                <div class="swiper-slide h-100">
+
+                    <div class="card h-100 w-100 swiperCards">
+                        <a asp-action="Property" asp-route-pageId="@featured.PageId" class="img position-relative">
+                            <img src="@(featuredImage)" class="card-img-top cropped-ofp" alt="@(featured.Title)" loading="lazy" width="600" height="600" title="@(featured.Title)">
+                            @if (featured.Sold)
+                            {
+                                <img src="\Images\Home\Selled.png" alt="فروخته شد" loading="lazy" width="254" height="200" title="فروخته شد" class="sold sold position-absolute top-50 start-50 translate-middle">
+                            }
+
+
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title fs-5">@(featured.Title)</h3>
+                            <p class="card-text">
+                                <span class="fs-6 text-dark fw-bold">
+                                    @{
+                                        if (!featured.isRent)
+                                        {
+                                            Write("قیمت : "+featured.PriceTotal.ToString("N0") + " تومان");
+                                        }
+                                        else if (featured.Deposit != 0 && featured.Rent != 0)
+                                        {
+                                            Write("رهن : " + featured.Deposit.ToString("N0") + " تومان" + "\n" + "اجاره : " + featured.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                        else if (featured.Deposit != 0)
+                                        {
+                                            Write("رهن : "+featured.Deposit.ToString("N0") + " تومان");
+                                        }
+                                        else if (featured.Rent != 0)
+                                        {
+                                            Write("اجاره : "+featured.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                    }
+
+                                </span>
+                                
+                           
+
+                                <span class="d-block text-dark">
+                                    <span class="icons8-location mx-2"> </span>
+
+                                    @(featured.Address)
+                                    </span>
+
+                            <div class="specs d-flex mb-4 base-infos text-dark">
+                                <span class="d-block d-flex align-items-center me-3">
+                                        <span class="icons8-bed-I mx-2"> </span>
+                                    <span class="caption"> @(featured.Rooms) اتاق</span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-metere mx-2"> </span>
+
+                                    <span class="caption">@(featured.Meterage) متر</span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-construction mx-2"> </span>
+
+                                    <span class="caption"> ساخت @(featured.Year)</span>
+                                </span>
+                                </div>
+                            </p>
+
+                        </div>
+                        <div class="card-footer text-dark">
+                            <i class="bi bi-clock-history"></i>
+                            <span class="caption">@(featuredesDate[featuredesDate_i])</span>
+
+                            <a asp-action="Property" asp-route-pageId="@featured.PageId"
+                               class="btn btn-primary py-2 px-3 float-start">مشاهده</a>
+
+                        </div>
+                    </div>
+
+                 
+                </div>
+                featuredesDate_i++;
+                
+            }
+
+
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+</div>
+
+
+    <div class="container">
+    <h4 class="font-weight-bold heading text-primary mb-4 mb-md-0 pb-4">
+        تیم ما در دپارتمان املاک حمید
+    </h4>
+        <!-- Swiper -->
+        <div dir="rtl" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+
+                @foreach (var employee in ViewBag.Employees)
+                {
+                    <div class="swiper-slide h-100 py-3">
+
+
+                    <div class="bg-white rounded shadow-sm py-5 px-4 person w-100 h-100 swiperCards">
+
+                        <a asp-controller="Agent" asp-action="index" asp-route-UserName="@employee.UserName">
+                            <img src="@employee.profilePic" alt="@employee.Name" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" loading="lazy" width="90" height="90" title="@employee.Name @employee.Role" />
+
+                        </a>
+                            <h5 class="mb-0">@employee.Name</h5><span class="small text-uppercase text-muted">@employee.Role</span>
+                            <div class="Multiline text-dark text-center card-text">
+                                @Html.Raw(employee.Comment)
+                            </div>
+                            <ul class="list-unstyled list-inliner social text-center">
+                                @if (employee.telegram != null)
+                                {
+
+                                    <li class="list-inline-item">
+                                    <a href="tg://resolve?domain=@employee.telegram" class=" bg-white">
+                                        <i class="icons8-telegram-app">تلگرام</i>
+                                        </a>
+                                    </li>
+                                }
+                                @if (employee.instagram != null)
+                                {
+                                    <li class="list-inline-item">
+                                    <a href="https://www.instagram.com/@employee.instagram" class="bg-white">
+                                        <i class="icons8-instagram">اینستاگرام</i>
+
+                                        </a>
+                                    </li>
+                                }
+                                @if (employee.whatsApp != null)
+                                {
+
+                                    <li class="list-inline-item">
+                                    <a href="https://wa.me/@(employee.whatsApp)" class="bg-white">
+                                        <i class="icons8-whatsapp">واتس اپ</i>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
+                }
+
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script src="/lib/PersianDate/PersianDate.umd.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="/lib/Swiper/Swiper.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+            var swiperFeatured = new Swiper(".mySwiperFeatured", {
+                loop: true,
+                autoHeight: true,
+                height: 200,
+                autoplay: {
+                    delay: 5500,
+                    disableOnInteraction: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 50,
+                    },
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            }
+            });
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoHeight: true,
+            height: 200,
+            autoplay: {
+                delay: 5500,
+                disableOnInteraction: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 50,
+                },
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            }
+        });
+    </script>
+    <script>
+        function setEqualHeight1() {
+            // replace your element css name to .services-slider_slide
+            var slides = document.querySelectorAll('.mySwiperFeatured');
+            var maxHeight = 0;
+
+            // Reset all slides to their natural height before calculating the tallest slide
+            slides.forEach(slide => {
+                slide.style.height = '';
+                if (slide.offsetHeight > maxHeight) {
+                    maxHeight = slide.offsetHeight;
+                }
+            });
+
+            // Set all slides to the height of the tallest slide
+            slides.forEach(slide => {
+                slide.style.height = maxHeight + 'px';
+            });
+        }
+
+
+
+        // Re-calculate heights on window resize
+        window.addEventListener('resize', setEqualHeight1);
+
+        // If you have other components or scripts that might change the content or structure
+        // of your slides dynamically (e.g., an image carousel), you may want to call
+        // setEqualHeight() again after those changes occur to ensure heights remain consistent.
+
+
+
+        function setEqualHeight() {
+            // replace your element css name to .services-slider_slide
+            var slides = document.querySelectorAll('.mySwiper');
+            var maxHeight = 0;
+
+            // Reset all slides to their natural height before calculating the tallest slide
+            slides.forEach(slide => {
+                slide.style.height = '';
+                if (slide.offsetHeight > maxHeight) {
+                    maxHeight = slide.offsetHeight;
+                }
+            });
+
+            // Set all slides to the height of the tallest slide
+            slides.forEach(slide => {
+                slide.style.height = maxHeight + 'px';
+            });
+        }
+
+
+
+        // Re-calculate heights on window resize
+        window.addEventListener('resize', setEqualHeight);
+
+        // If you have other components or scripts that might change the content or structure
+        // of your slides dynamically (e.g., an image carousel), you may want to call
+        // setEqualHeight() again after those changes occur to ensure heights remain consistent.
+
+    </script>
+
+}

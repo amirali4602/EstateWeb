@@ -1,0 +1,126 @@
+﻿@model Estate.Models.Page
+
+@{
+    ViewData["Title"] = "خرید ملک در رشت";
+    ViewData["Canonical"] = ViewBag.Canonical;
+    @section Styles
+    {
+        <link rel="stylesheet" href="/css/Swiper.css" />
+        <style>
+            .mask {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-attachment: fixed;
+            }
+
+            .bg-image {
+                position: relative;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+            }
+        </style>
+
+    }
+}
+<!-- Hero -->
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('/images/home/hero_bg_3.jpg');
+    height: 50vh;
+  ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="display-5 fw-bold fs-2 text-white">@ViewData["Title"]</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=" container mw-500">
+    <div class="card mt-5">
+
+        <div class="card-body p-4">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="1" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید آپارتمان مسکونی در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="2" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید آپارتمان اداری در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="3" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید آپارتمان موقعیت اداری در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="4" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید خانه ، ویلا ، کلنگی در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="5" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید مجتمع آپارتمانی و مستغلات در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="6" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید زمین در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="7" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید تجاری و مغازه در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="8" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید باغ و باغچه در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="9" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">خرید صنعتی و زراعی در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <hr />
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Buy" asp-route-CategoryId="10" class="text-decoration-none hstack gap-3">
+
+                        <p class="ms-auto">املاک مشارکت در ساخت در رشت</p>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

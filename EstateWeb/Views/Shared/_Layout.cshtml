@@ -1,50 +1,161 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
+@{
+    ViewData["logo"] = "/images/logo.jpg";
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EstateWeb</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EstateWeb.styles.css" asp-append-version="true" />
+    <title>املاک حمید | @ViewData["Title"]</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0H8BG9J50"></script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T4DMHM8L');</script>
+
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-M0H8BG9J50');
+    </script>
+
+    <!-- End Google Tag Manager -->
+
+    <meta name="google-site-verification" content="jts-UHG1NfmzO-VeBzoxQ8Mc1cz4h88DREau_-J8Olw" />
+
+    <!--Goftino-->
+    <script type="text/javascript">
+        ["keydown", "touchmove", "touchstart", "mouseover"].forEach(function (v) { window.addEventListener(v, function () { if (!window.isGoftinoAdded) { window.isGoftinoAdded = 1; var i = "IjWccx", d = document, g = d.createElement("script"), s = "https://www.goftino.com/widget/" + i, l = localStorage.getItem("goftino_" + i); g.type = "text/javascript", g.async = !0, g.src = l ? s + "?o=" + l : s; d.getElementsByTagName("head")[0].appendChild(g); } }) });
+    </script>
+
+    <!-- Open Graph Protocol meta tags -->
+    <!-- important ones -->
+    <meta property="og:title" content="@ViewData["Title"]">
+    <meta property="og:description" content="@ViewData["Description"]">
+    <meta property="og:image" content="@ViewData["logo"]">
+    <meta property="og:url" content="@ViewData["Canonical"]">
+    <!-- optional ones -->
+    <meta property="og:type" content="website">
+
+    <link rel="canonical" href="@ViewData["Canonical"]" />
+    <meta name="description" content="@ViewData["Description"]" />
+    <meta name="theme-color" content="#EDC592" />
+
+    <!-- ios meta tags -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-180x180.png">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+
+    <!--footer icons-->
+
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+
+    <!--Mine-->
+
+    <link rel="stylesheet"  href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/EstateWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/theme.css" asp-append-version="true" />
+    <!--CDN-->
+    <link rel="stylesheet" href="/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="/lib/Swiper/Swiper.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/toastr/toastr.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/jquery-libs/jquery.dropdown.min.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required: false)
+
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EstateWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4DMHM8L"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+    <partial name="_Notifications" />
+
+    <!-- ======= Header/Navbar ======= -->
+    <partial name="_Header" />
+    <!-- End Header/Navbar -->
+
+    <main role="main" class="pb-3" style="margin-top:5rem">
+        @RenderBody()
+        
+
+    </main>
+    <style>
+        #overlay {
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            transition: 1s 0.4s;
+        }
+
+            #overlay img{
+                position: absolute;
+                top: calc(50vh - 110px);
+                left: calc(50vw - 60px);
+            }
+        #progress {
+            height: 1px;
+            background: #fff;
+            position: absolute;
+            width: 0; /* will be increased by JS */
+            top: 50%;
+        }
+
+        #progstat {
+            font-size: 0.7em;
+            letter-spacing: 3px;
+            position: absolute;
+            top: calc(50% + 10px);
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+    <div id="overlay" class="loader">
+        
+        <img src="/Images/logo.jpg" alt="املاک حمید" class="rounded-circle" width="100" height="100" loading="eager" title="املاک حمید" />
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - EstateWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <partial name="_Footer" />
+
+
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+    <!-- Template Main JS File -->
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="/lib/jquery-libs/jquery.dropdown.min.js" asp-append-version="true"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#overlay').fadeOut("slow");
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

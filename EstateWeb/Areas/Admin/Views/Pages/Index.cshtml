@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Estate.Models.Page>
+
+@{
+    ViewData["Title"] = "لیست املاک";
+}
+<partial name="_Notifications" />
+
+<h1 class="pt-5">املاک</h1>
+
+
+<table id="tblData" class="table table-bordered table-striped nowrap">
+    <thead>
+        <tr>
+            <th>کد صفحه</th>
+            <th>عکس</th>
+            <th>عنوان</th>
+            <th>آدرس</th>
+            <th>مشاور</th>
+            <th>قیمت کل</th>
+            <th>متری</th>
+            <th>متراژ</th>
+            <th>ودیعه</th>
+            <th>اجاره</th>
+            <th> مشتری</th>
+            <th> نمایش</th>
+            <th> ویژه</th>
+            <th> ملک</th>
+            <th> تاریخ ثبت</th>
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+    <script src="/js/Pages.js"></script>
+}

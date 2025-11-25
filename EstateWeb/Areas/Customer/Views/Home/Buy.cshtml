@@ -1,0 +1,399 @@
+﻿@model IEnumerable<Page>
+
+@{
+    ViewData["Title"] = "خرید ملک";
+
+    ViewData["Canonical"] = ViewBag.Canonical;
+    ViewData["Description"] = "آگهی‌های خرید و فروش خانه، ویلا، آپارتمان و زمین را در املاک حمید جستجو کنید. ملک دلخواه خود را بیابید.";
+    dynamic pageDate = ViewBag.pageDate;
+    pageDate = pageDate.Split("*");
+    var pageDate_i = 0;
+    var schemaJson = ViewData["Schema"];
+    schemaJson = schemaJson.ToString().Replace("type", "@type").Replace("context", "@context");
+    @section Styles
+    {
+        <script type="application/ld+json">
+            @Html.Raw(schemaJson)
+            
+        </script>
+
+
+    }
+}
+
+
+
+<!-- Trigger/Open The Modal -->
+<div class="container border-light shadow rounded bg-light" style="margin-top:20vh">
+    <form class="row align-items-center text-dark " method="post">
+
+        <div class="input-group" dir="ltr">
+            <button class="btn btn-outline-primary" type="submit" id="button-addon2">
+                <i class="bi bi-search"></i>
+                جستجو
+            </button>
+            <input type="text" class="form-control" placeholder="جستجو در همه آگهی ها ..." aria-label="جستجو" aria-describedby="button-addon2" dir="rtl" name="query">
+
+           
+        </div>
+        <div class="col-12 col-lg-3 col-sm-6">
+            <p class="text-primary m-0">حداقل قیمت</p>
+
+            <div class="input-group" dir="ltr">
+                <span class="input-group-text">تومان</span>
+                <input dir="rtl" type="number" pattern="\d*" step="10e6" name="minPrice" class="form-control" placeholder="حداقل قیمت" aria-label="حداقل قیمت" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                <input dir="rtl" type="range" min="0" max="10e10" step="10e6" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                <output class="mx-auto"></output>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 col-sm-6">
+            <p class="text-primary m-0">حداکثر قیمت</p>
+
+            <div class="input-group" dir="ltr">
+                <span class="input-group-text">تومان</span>
+                <input dir="rtl" type="number" pattern="\d*" step="10e6" name="maxPrice" class="form-control" placeholder="حداکثر قیمت" aria-label="حداکثر قیمت" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                <input dir="rtl" type="range" min="0" max="10e10" step="10e6" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                <output class="mx-auto"></output>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-sm-6">
+            <p class="text-primary m-0">حداقل متراژ</p>
+
+            <div class="input-group" dir="ltr">
+                <input type="number" pattern="\d*" step="1e3" name="minMeter" class="form-control" placeholder="حداقل متراژ" aria-label="حداقل متراژ" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                <input type="range" min="0" max="1e3" step="1" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                <output class="mx-auto"></output>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-sm-6">
+            <p class="text-primary m-0">حداکثر متراژ</p>
+
+            <div class="input-group" dir="ltr">
+                <input type="number" pattern="\d*" step="1e3" name="maxMeter" class="form-control" placeholder="حداکثر متراژ" aria-label="حداکثر متراژ" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                <input type="range" min="0" max="1e3" step="1" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                <output class="mx-auto"></output>
+            </div>
+        </div>
+
+    </form><!-- Button trigger modal -->
+    <div class="d-grid col-2">
+        <button type="button" class="btn btn-outline-danger my-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            جستجوی پیشرفته
+        </button>
+        </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" dir="ltr">
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <h4 class="modal-title fs-5" id="exampleModalLabel">جستجوی پیشرفته</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="advancedSearch" class="row g-3 align-items-center text-dark">
+
+                    <div class="col-12">
+                        <div class="p-3 bg-light">
+                            <i class="bi bi-search"></i>
+                            <input name="query" class="form-control" placeholder="جستجو در همه آگهی ها ..." />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6">
+                        <p class="text-primary m-0">حداقل قیمت</p>
+
+                        <div class="p-3 bg-light">
+                            <input name="minPrice" class="form-control" placeholder="حداقل قیمت (تومان)" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                            <input type="range" min="0" max="10e10" step="10e6" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                            <output></output>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p class="text-primary m-0">حداکثر قیمت</p>
+
+                        <div class="p-3 bg-light">
+                            <input name="maxPrice" class="form-control" placeholder="حداکثر قیمت (تومان)" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                            <input type="range" min="0" max="10e10" step="10e6" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                            <output></output>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6">
+                        <p class="text-primary m-0">حداقل متراژ</p>
+
+                        <div class="p-3 bg-light">
+                            <input name="minMeter" class="form-control" placeholder="حداقل متراژ" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                            <input type="range" min="0" max="1e3" step="1" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                            <output></output>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6">
+                        <p class="text-primary m-0">حداکثر متراژ</p>
+
+                        <div class="p-3 bg-light">
+
+                            <input name="maxMeter" class="form-control" placeholder="حداکثر متراژ" oninput="this.nextElementSibling.value = this.value;this.nextElementSibling.nextElementSibling.value = wordifyfa(this.value)" />
+                            <input type="range" min="0" max="1e3" step="1" oninput="this.nextElementSibling.value = wordifyfa(this.value);this.previousElementSibling.value = this.value;" class="form-range" />
+
+                            <output></output>
+                        </div>
+                    </div>
+                    <div class="text-primary">نوع ملک</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="CategoryId" multiple>
+                            @foreach (var item in ViewBag.CategoryId)
+                            {
+                                <option id="@item.Name" name="CategoryId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+
+                    <div class="text-primary">سرمایش</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="CoolingId" multiple>
+                            @foreach (var item in ViewBag.CoolingId)
+                            {
+                                <option id="@item.Name" name="CoolingId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="text-primary">گرمایش</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="HeatingId" multiple>
+                            @foreach (var item in ViewBag.HeatingId)
+                            {
+                                <option id="@item.Name" name="HeatingId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+
+                    <div class="text-primary">جهت ساختمان</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="BuildingDirectionId" multiple>
+                            @foreach (var item in ViewBag.BuildingDirectionId)
+                            {
+                                <option id="@item.Name" name="BuildingDirectionId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="text-primary">سند</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="DocumentTypeId" multiple>
+                            @foreach (var item in ViewBag.DocumentTypeId)
+                            {
+                                <option id="@item.Name" name="DocumentTypeId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="text-primary">سرویس بهداشتی</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="ToiletId" multiple>
+                            @foreach (var item in ViewBag.ToiletId)
+                            {
+                                <option id="@item.Name" name="ToiletId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+
+
+                    <div class="text-primary">تامین کننده آب گرم</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="HotWaterSupplierId" multiple>
+                            @foreach (var item in ViewBag.HotWaterSupplierId)
+                            {
+                                <option id="@item.Name" name="HotWaterSupplierId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="text-primary">جنس کف</div>
+                    <div class="multiDropDowns">
+                        <select style="display:none" name="FloorMaterialId" multiple>
+                            @foreach (var item in ViewBag.FloorMaterialId)
+                            {
+                                <option id="@item.Name" name="FloorMaterialId" value="@item.Id">@item.Name</option>
+
+                            }
+                        </select>
+                    </div>
+
+                    <hr />
+                    <div class="row gx-5">
+                        <div class="form-check form-switch col-12 col-sm-6">
+
+                            <input type="checkbox" name="parking" value="true" class="form-check-input">
+                            <label for="parking" class="form-check-label">پارکینگ</label>
+                        </div>
+                        <div class="form-check form-switch col-12 col-sm-6">
+
+                            <input type="checkbox" name="elevator" value="true" class="form-check-input">
+                            <label for="elevator" class="form-check-label">آسانسور</label>
+                        </div>
+
+                        <div class="form-check form-switch col-12 col-sm-6">
+
+                            <input type="checkbox" name="balcony" value="true" class="form-check-input">
+                            <label for="balcony" class="form-check-label">بالکنی</label>
+                        </div>
+
+                        <div class="form-check form-switch col-12 col-sm-6">
+
+                            <input type="checkbox" name="restored" value="true" class="form-check-input">
+                            <label for="restored" class="form-check-label"> بازسازی شده است</label>
+                        </div>
+                    </div>
+                    <div class="d-grid mx-auto w-25">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button class="btn btn-primary" type="submit" form="advancedSearch">
+                    <i class="bi bi-search"></i>
+                    جستجو</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section section-properties">
+    <div class="container">
+        <h2 class="font-weight-bold text-primary heading">
+            خرید ملک
+        </h2>
+        <div class="row">
+            @{
+                int p =0;
+                int mapP = 1000;
+            }
+            @foreach (var page in Model)
+            {
+                var pageImage = "/images/logo.jpg";
+                if (page.ImageUrl != null)
+                {
+                    pageImage = page.ImageUrl;
+                }
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  py-2">
+                    <div class="card h-100 w-100">
+                        <a asp-action="Property" asp-route-PageId="@(page.PageId)" class="img position-relative">
+                            <img src="@(pageImage)" class="card-img-top cropped-ofp" alt="@(page.Title)" loading="lazy" />
+                            @if (page.Sold)
+                            {
+                                <img src="\Images\Home\Selled.png" alt="فروخته شد" loading="lazy" width="254" height="200" title="فروخته شد" class="sold position-absolute top-50 start-50 translate-middle">
+                            }
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title fs-5">@(page.Title)</h3>
+                            <p class="card-text">
+                                <span class="fs-6 text-dark fw-bold">
+                                    @{
+                                        if (!page.isRent)
+                                        {
+                                            Write("قیمت : " + page.PriceTotal.ToString("N0") + " تومان");
+                                        }
+                                        else if (page.Deposit != 0 && page.Rent != 0)
+                                        {
+                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان" + "\n" + "اجاره : " + page.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                        else if (page.Deposit != 0)
+                                        {
+                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان");
+                                        }
+                                        else if (page.Rent != 0)
+                                        {
+                                            Write("اجاره : " + page.Rent.ToString("N0") + " تومان");
+
+                                        }
+                                    }
+
+                                </span>
+
+
+
+                                <span class="d-block text-dark">
+                                    <span class="icons8-location mx-2"> </span>
+
+                                    @(page.Address)
+                                </span>
+
+                                <div class="specs d-flex mb-4 base-infos text-dark">
+                                    <span class="d-block d-flex align-items-center me-3">
+                                        <span class="icons8-bed-I mx-2"> </span>
+                                        <span class="caption"> @(page.Rooms) اتاق</span>
+                                    </span>
+                                    <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-metere mx-2"> </span>
+
+                                        <span class="caption">@(page.Meterage) متر</span>
+                                    </span>
+                                    <span class="d-block d-flex align-items-center">
+                                        <span class="icons8-construction mx-2"> </span>
+
+                                        <span class="caption"> ساخت @(page.Year)</span>
+                                    </span>
+                                </div>
+                            </p>
+
+                        </div>
+                        <div class="card-footer text-dark">
+
+                            <i class="bi bi-clock-history"></i>
+                            <span class="caption">@(pageDate[pageDate_i])</span>
+
+                            <a asp-action="Property" asp-route-pageId="@(page.PageId)"
+                               class="btn btn-primary py-2 px-3 float-start">مشاهده</a>
+
+                        </div>
+                    </div>
+
+                    <!-- .item -->
+                </div>
+                p++;
+                if(mapP <= p)
+                {
+                    break;
+                }
+                pageDate_i++;
+
+            }
+        </div>
+
+        
+
+    </div>
+</div>
+@section Scripts{
+    <script src="/lib/jquery-libs/jquery.dropdown.min.js"></script>
+    <script>
+
+        $('.multiDropDowns').dropdown({
+            multipleMode: 'label', searchable: true, input: '<input type="text" maxLength="20" placeholder="جستجو">',
+        });
+
+    </script>
+    <script src="~/lib/dist/wordifyfa.min.js"></script>
+}

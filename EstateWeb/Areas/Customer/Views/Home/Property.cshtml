@@ -1,0 +1,638 @@
+﻿@model Page
+
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Canonical"] = ViewBag.Canonical;
+    ViewData["Description"] = Model.Address;
+
+    var schemaJson = ViewData["Schema"];
+    schemaJson = schemaJson.ToString().Replace("type", "@type").Replace("context", "@context");
+}
+@section Styles{
+    <script type="application/ld+json">
+        @Html.Raw(schemaJson)
+
+    </script>
+    <!-- Demo styles -->
+    <style>
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        .swiper {
+            width: 100%;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .mySwiper2 {
+            height: 500px;
+            width: 100%;
+        }
+
+        .mySwiper {
+            height: 100px;
+            box-sizing: border-box;
+            padding: 10px 0;
+        }
+
+            .mySwiper .swiper-slide {
+                width: 25%;
+                height: 100%;
+                opacity: 0.4;
+            }
+
+            .mySwiper .swiper-slide-thumb-active {
+                opacity: 1;
+            }
+
+        .mySwiper2 .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .mySwiper .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+
+}
+<style>
+    .mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-attachment: fixed;
+    }
+
+    .bg-image {
+        position: relative;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+</style>
+@{
+    var heroImage = "/images/home/hero_bg_3.jpg";
+    if (string.IsNullOrEmpty(Model.ImageUrl) != true)
+    {
+        heroImage = Model.ImageUrl.Replace("\\","/");
+    }
+    else if (Model.Gallery != null)
+    {
+        var galleryList = Model.Gallery.Split(" ");
+        foreach (var g in galleryList)
+        {
+            heroImage = g.Replace("\\", "/");
+            break;
+
+        }
+    }
+
+}
+<!-- Hero -->
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('@heroImage');
+    height: 50vh;
+  ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="display-5 fw-bold fs-2 text-white">@ViewData["Title"]</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="section mt-5" dir="ltr">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+
+
+
+                <!-- Swiper -->
+
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        
+                        @{
+                            if (string.IsNullOrEmpty(Model.ImageUrl) != true)
+                            {
+                                    <div class="swiper-slide">
+                                        <div class="swiper-zoom-container">
+                                            <img loading="lazy" src="@(Model.ImageUrl)" alt="@Model.Title" class="cropped-ofp-property" />
+                                        </div>
+
+                                    </div>
+                            }
+                            if (Model.Gallery != null)
+                            {
+                                var galleryList = Model.Gallery.Split(" ");
+                                foreach (var g in galleryList)
+                                {
+                                        <div class="swiper-slide">
+                                            <div class="swiper-zoom-container">
+                                                <img loading="lazy" src="@g" alt="@Model.Title" class="cropped-ofp-property" />
+                                            </div>
+
+                                        </div>
+                                }
+                            }
+                            if (Model.Gallery == null && string.IsNullOrEmpty(Model.ImageUrl) == true)
+                            {
+                                    <div class="swiper-slide">
+                                        <div class="swiper-zoom-container">
+                                            <img loading="lazy" src="/Images/Logo.jpg" alt="@Model.Title" />
+                                        </div>
+                                    </div>
+
+                            }
+
+                        }
+
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+
+                        @{
+                            if (string.IsNullOrEmpty(Model.ImageUrl) != true)
+                            {
+                                    <div class="swiper-slide">
+
+                                        <img loading="lazy" src="@(Model.ImageUrl)" alt="@Model.Title" class="cropped-ofp-property" />
+                                    </div>
+                            }
+                            if (Model.Gallery != null)
+                            {
+                                var galleryList = Model.Gallery.Split(" ");
+                                foreach (var g in galleryList)
+                                {
+                                        <div class="swiper-slide">
+                                            <img loading="lazy" src="@g" alt="@Model.Title" class="cropped-ofp-property" />
+                                        </div>
+                                }
+                            }
+                            if (Model.Gallery == null && string.IsNullOrEmpty(Model.ImageUrl) == true)
+                            {
+                                    <div class="swiper-slide">
+                                        <img loading="lazy" src="/Images/Logo.jpg" alt="@Model.Title" />
+                                    </div>
+
+                            }
+
+                        }
+                    </div>
+                </div>
+              
+                @if (ViewBag.Creator != null)
+                {
+                    <div class="bg-white rounded shadow-sm py-5 px-4 person" dir="rtl">
+                        @if (ViewBag.Creator.profilePic != null)
+                        {
+                            <div class="img mb-4 text-center">
+                                <a asp-controller="Agent" asp-action="index" asp-route-UserName="@ViewBag.Creator.UserName">
+                                <img loading="lazy" src="@ViewBag.Creator.profilePic"
+                                         alt="@ViewBag.Creator.profilePic"
+                                     class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" width="200" />
+                                     </a>
+                            </div>
+                        }
+                        <div class="text text-center">
+                            @if (ViewBag.Creator.Name != null)
+                            {
+                                <h3 class="mb-0 fs-3 mb-2">@ViewBag.Creator.Name</h3>
+
+                            }
+
+                            <h3 class="mb-0 fs-4 mb-2">شماره تماس</h3>
+                            @if (ViewBag.Creator.Number != null)
+                            {
+                                <a class="meta mb-3 text-dark btn btn-outline-primary" href="tel:@ViewBag.Creator.Number">@ViewBag.Creator.Number</a>
+
+
+                            }else{
+                                <a class="meta mb-3 text-dark btn btn-outline-primary" href="tel:@ViewBag.CustomerNumber">@ViewBag.CustomerNumber</a>
+
+                            }
+                            <div class="Multiline text-dark text-center">
+                                @Html.Raw(@ViewBag.Creator.Comment)
+                            </div>
+
+
+                        </div>
+                        <ul class="list-unstyled list-inliner social text-center">
+                            @if (ViewBag.Creator.telegram != null)
+                            {
+
+                                <li class="list-inline-item">
+                                    <a href="tg://resolve?domain=@ViewBag.Creator.telegram" class=" bg-white">
+                                        <i class="icons8-telegram-app">تلگرام</i>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.Creator.instagram != null)
+                            {
+                                <li class="list-inline-item">
+                                    <a href="https://www.instagram.com/@ViewBag.Creator.instagram" class="bg-white">
+                                        <i class="icons8-instagram">اینستاگرام</i>
+
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.Creator.whatsApp != null)
+                            {
+
+                                <li class="list-inline-item">
+                                    <a href="https://wa.me/@(ViewBag.Creator.whatsApp)" class="bg-white">
+                                        <i class="icons8-whatsapp">واتس اپ</i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="bg-white rounded shadow-sm py-5 px-4 person" dir="rtl">
+                        
+                        <div class="text text-center">
+                            
+
+                            <h3 class="mb-0 fs-4 mb-2">شماره تماس</h3>
+                            <a class="meta mb-3 text-dark btn btn-outline-primary" href="tel:@ViewBag.CustomerNumber">@ViewBag.CustomerNumber</a>
+
+
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+            <div class="col-lg-6" dir="rtl">
+                <h2 class="heading text-primary fs-3">@Model.Title</h2>
+                <h3 class="text-muted fs-5">@Model.Address</h3><span onload="this.text = this.text.toLocaleDateString('fa-IR')">@ViewData["Date"]</span>
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">متراژ</th>
+                            @if (ViewBag.Category.Id != 6)
+                            {
+                            <th scope="col">سال ساخت</th>
+                            
+
+                            <th scope="col">اتاق</th>
+                            }
+                            @if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
+                            {
+                            <th scope="col">طبقه</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@(Model.Meterage)</td>
+                            @if (ViewBag.Category.Id != 6)
+                            {
+
+                            <td>@(Model.Year)</td>
+                            <td>@(Model.Rooms)</td>
+                            }
+
+                            @if (ViewBag.Category.Id != 7)
+                            {
+                                <td>@(Model.Floor) از @(Model.TotalFloors)</td>
+                            }
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr />
+
+                <div class="row text-dark">
+                    @if (Model.isRent == true)
+                    {
+                        <div class="col">ودیعه</div>
+
+                        <div class="col">@(Model.Deposit.ToString("N0")) تومان</div>
+
+                    }
+                    else
+                    {
+                        <div class="col">قیمت کل</div>
+
+                        <div class="col"> @(Model.PriceTotal.ToString("N0")) تومان</div>
+
+
+                    }
+
+                </div>
+                <hr />
+                <div class="row text-dark">
+                    @if (Model.isRent == true)
+                    {
+                        <div class="col">قیمت اجاره</div>
+
+                        <div class="col">@(Model.Rent.ToString("N0")) تومان</div>
+
+                    }
+                    else
+                    {
+                        <div class="col">قیمت هر متر</div>
+
+                        <div class="col"> @(Model.PriceMeter.ToString("N0")) تومان</div>
+
+
+                    }
+
+                </div>
+                <hr />
+                @{
+                    if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
+                    {
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">آسانسور</th>
+                                        <th scope="col">پارکینگ</th>
+                                        <th scope="col">انباری</th>
+                                        <th scope="col">بالکن</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @if (Model.Elevator)
+                                        {
+                                            Write("دارد");
+                                        }
+                                        else
+                                        {
+                                            Write("ندارد");
+
+                                        }
+                                        </td>
+                                        <td>
+                                            @if (Model.Parking)
+                                        {
+                                            Write("دارد");
+                                        }
+                                        else
+                                        {
+                                            Write("ندارد");
+
+                                        }
+                                        </td>
+                                        <td>
+                                            @if (Model.StoreRoom)
+                                        {
+                                            Write("دارد");
+                                        }
+                                        else
+                                        {
+                                            Write("ندارد");
+
+                                        }
+                                        </td>
+                                        <td>
+                                            @if (Model.Balcony)
+                                        {
+                                            Write("دارد");
+                                        }
+                                        else
+                                        {
+                                            Write("ندارد");
+
+                                        }
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+
+                    }
+                }
+                
+                @{
+                    if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
+                    {
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                نمایش همهٔ جزئیات
+                            </button>
+
+                    }
+                }
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header" dir="ltr">
+                                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                <h5 class="modal-title" id="staticBackdropLabel">ویژگی های ملک</h5>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-dark">
+                                            سند
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-center text-dark">
+                                            @ViewBag.DocumentType.Name
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-dark">
+                                            جهت ساختمان
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-center text-dark">
+                                            @ViewBag.BuildingDirection.Name
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-dark">
+                                            تعداد واحد در طبقه
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-center text-dark">
+                                            @Model.Units
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-dark">
+                                            وضعیت واحد
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-center text-dark">
+                                            @if (Model.Restored)
+                                            {
+                                                Write("بازسازی شده");
+                                            }
+                                            else
+                                            {
+                                                Write("بازسازی نشده");
+
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <h4>امکانات </h4>
+                                </div>
+                                <div class="row">
+                                    <p class="text-dark">
+                                        جنس کف @ViewBag.FloorMaterial.Name
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <p class="text-dark">
+
+                                        نوع سرویس بهداشتی @ViewBag.Toilet.Name
+                                    </p>
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <p class="text-dark">
+                                        سرمایش @ViewBag.Cooling.Name
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <p class="text-dark">
+                                        گرمایش @ViewBag.Heating.Name
+                                    </p>
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <p class="text-dark">
+                                        تامیین کننده آب گرم @ViewBag.HotWaterSupplier.Name
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="heading text-muted">توضیحات</h3>
+
+                <div class="meta lead px-5 text-dark">
+                    @Html.Raw(Model.Description)
+                </div>
+
+
+     
+                </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <!-- Swiper JS -->
+    <script src="/lib/Swiper/Swiper.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+            grabCursor: true, zoom: true,
+            observer: true
+            
+        });
+    </script>
+    @if (Model.Sold)
+    {
+
+        <script>
+            jQuery(window).on("load", function () {
+                $(".swiper-slide-active > div ").each(
+                    function () {
+                        $(this).append('<img src="/Images/Home/Selled.png" alt="2" loading="lazy" width="100" height="100" title="2" class="soled-prop">');
+                    }
+                );
+            });
+        </script>
+    }
+    <script src="~/lib/dist/wordifyfa.min.js"></script>
+}
+    

@@ -1,0 +1,141 @@
+﻿@page
+@model RegisterConfirmationModel
+@using EstateWeb.Core
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+@{
+    ViewData["Title"] = "کد تایید را وارد کنید";
+}
+<partial name="_Notifications" />
+
+@{
+    ViewData["PhoneNumber"] = ViewData["Phone"];
+    TempData["PhoneNumber"] = ViewData["Phone"];
+}
+@section Styles {
+    <style>
+        .grecaptcha-badge {
+            width: 70px !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            left: 4px !important;
+            right: auto !important;
+        }
+
+            .grecaptcha-badge:hover {
+                width: 256px !important;
+            }
+
+        .grecaptcha-logo {
+            direction: ltr;
+        }
+    </style>
+}
+
+<div class=" container mt-c mw-500">
+    <div class="card shadow border-0 mt-5">
+        <div class="card-header bg-primary bg-gradient ml-0 py-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="py-2 fs-4">@ViewData["Title"]</h1>
+                    <h2 class="py-2 fs-5"> کد تایید به شماره @ViewData["PhoneNumber"] پیامک شد. </h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <input type="hidden" asp-for="Input.Token" id="LoginToken" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Code" class="form-control" />
+                                <label asp-for="Input.Code">کد تایید را وارد کنید</label>
+
+                                <span asp-validation-for="Input.Code" class="text-danger"></span>
+                            </div>
+                            <div class="input-group row">
+                                <div class="form-floating mb-3 col-11">
+                                    <input asp-for="Input.Password" id="pass_log_id" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز عبور" />
+                                    <label asp-for="Input.Password">
+                                        <i class="bi bi-key"></i>
+                                        رمز عبور
+                                    </label>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <span toggle="#password-field" id="password-field" class="bi bi-eye-fill field_icon toggle-password fs-5 mt-3 rounded-circle col-1"></span>
+
+                            </div>
+                            <div class="input-group row">
+                                <div class="form-floating mb-3 col-11">
+                                    <input asp-for="Input.ConfirmPassword" id="pass_log_check" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز عبور" />
+                                    <label asp-for="Input.ConfirmPassword">
+                                        <i class="bi bi-key-fill"></i>
+                                        تکرار رمز عبور
+                                    </label>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                                <span toggle="#password-field-check" id="password-field-check" class="bi bi-eye-fill field_icon toggle-password fs-5 mt-3 rounded-circle col-1"></span>
+
+                            </div>
+                            <!--
+
+                            <div class="form-floating mb-3">
+                                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                                    <option disabled selected>--Select Role--</option>
+                                </select>
+                            </div>
+                            -->
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">تایید و ادامه</button>
+
+                            <div>
+                                <p>
+                                    <a asp-page="./login" asp-route-returnUrl="@Model.ReturnUrl">ورود به حساب</a>
+                                </p>
+                            </div>
+                        </form>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js?render=@(GoogleCaptchaConfig.Value.SiteKey)"></script>
+    <script>
+        function getToken() {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@(GoogleCaptchaConfig.Value.SiteKey)', { action: 'submit' }).then(function (token) {
+                    // Add your logic to submit to your backend server here.
+                    document.getElementById("LoginToken").value = token;
+                });
+            });
+        }
+        setInterval(getToken, 115000);
+        $(function () {
+            getToken();
+        })
+    </script>
+
+    <script>
+        $(document).on('click', '#password-field', function () {
+
+            $(this).toggleClass("bi bi-eye-slash-fill");
+
+            var input = $("#pass_log_id");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+        });
+        $(document).on('click', '#password-field-check', function () {
+
+            $(this).toggleClass("bi bi-eye-slash-fill");
+
+            var input = $("#pass_log_check");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

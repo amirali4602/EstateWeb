@@ -1,0 +1,129 @@
+﻿@page
+@model LoginModel
+@using EstateWeb.Core
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+@{
+    ViewData["Title"] = "ورود به حساب کاربری";
+    
+}
+@section Styles{
+    <style>
+        .grecaptcha-badge {
+            width: 70px !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            left: 4px !important;
+            right: auto !important;
+        }
+
+            .grecaptcha-badge:hover {
+                width: 256px !important;
+            }
+
+        .grecaptcha-logo {
+            direction: ltr;
+        }
+    </style>
+}
+
+
+
+<div class=" container mt-c mw-500">
+    <div class="card shadow border-0 mt-5">
+        <div class="card-header bg-primary bg-gradient ml-0 py-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="py-2 fs-4">@ViewData["Title"]</h1>
+                    <h2 class="py-2 fs-5">شماره موبایل و رمز عبور خود را وارد کنید</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <form id="account" method="post">
+                            <input type="hidden" asp-for="Input.Token" id="LoginToken" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="username" aria-required="true" placeholder="09200000000" />
+                                <label asp-for="Input.PhoneNumber" class="form-label">
+                                    <i class="bi bi-phone"></i>
+                                    شماره موبایل</label>
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="input-group row">
+                                <div class="form-floating mb-3 col-11">
+                                    <input asp-for="Input.Password" id="pass_log_id" class="form-control" autocomplete="current-password" aria-required="true" placeholder="رمز عبور" />
+
+                                    <label asp-for="Input.Password" class="form-label">
+                                        <i class="bi bi-key"></i>
+                                        رمز عبور</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <span toggle="#password-field" class="bi bi-eye-fill field_icon toggle-password fs-5 mt-3 rounded-circle col-1"></span>
+
+                            </div>
+
+                            <div class="checkbox mb-3">
+                                <label asp-for="Input.RememberMe" class="form-label">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    مرا بخاطر بسپار
+                                </label>
+                            </div>
+                            <div>
+                                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">ورود</button>
+                            </div>
+                            <div>
+                                <p>
+                                    <a id="forgot-password" asp-page="./Register" asp-route-title="فراموشی رمز عبور">فراموشی رمز عبور</a>
+                                </p>
+                                <p>
+                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">ثبت نام بعنوان کاربر جدید</a>
+                                </p>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@(GoogleCaptchaConfig.Value.SiteKey)&onload=onloadCallback"></script>
+    <script>
+        function getToken() {
+            
+            grecaptcha.ready(function () {
+                
+                
+                grecaptcha.execute('@(GoogleCaptchaConfig.Value.SiteKey)', { action: 'submit' }).then(function (token) {
+                    // Add your logic to submit to your backend server here.
+                    document.getElementById("LoginToken").value = token;
+                });
+            });
+        }
+        setInterval(getToken, 115000);
+        $(function () {
+            getToken();
+        })
+    </script>
+
+    <script>
+        $(document).on('click', '.toggle-password', function () {
+
+            $(this).toggleClass("bi bi-eye-slash-fill");
+
+            var input = $("#pass_log_id");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+    
+
+
+}

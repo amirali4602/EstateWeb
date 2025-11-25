@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin)) )
+{
+
+    <a class="text-decoration-none  text-dark shadow rounded p-2 btn btn-primary" asp-area="Admin" asp-controller="Employee" asp-action="Index" title="ثبت آگهی">
+            <i class="bi bi-pencil-square"></i>
+            ثبت آگهی
+
+    </a>
+}
+else if (SignInManager.IsSignedIn(User))
+{
+    <a class="text-decoration-none  text-dark shadow rounded p-2 btn btn-primary" asp-area="Customer" asp-controller="Ads" asp-action="Index" title="ثبت آگهی">
+
+            <i class="bi bi-pencil-square"></i>
+            ثبت آگهی
+
+    </a>
+}
+else
+{
+    <a class="text-decoration-none text-dark shadow rounded p-2 btn btn-primary" asp-area="Identity" asp-page="/Account/Login" title="ثبت آگهی">
+            <i class="bi bi-pencil-square"></i>
+            ثبت آگهی
+
+    </a>
+}
+

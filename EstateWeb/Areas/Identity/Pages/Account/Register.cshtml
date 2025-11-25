@@ -1,0 +1,96 @@
+﻿@page
+@model RegisterModel
+
+@using EstateWeb.Core
+@using Microsoft.Extensions.Options
+@inject IOptions<GoogleCaptchaConfig> GoogleCaptchaConfig
+@{
+    ViewData["Title"] = "ورود به حساب کاربری ";
+    if (ViewData["changetitle"] != null)
+    {
+        ViewData["Title"] = ViewData["changetitle"];
+
+    }
+}
+@section Styles {
+    <style>
+        .grecaptcha-badge {
+            width: 70px !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            left: 4px !important;
+            right: auto !important;
+        }
+
+            .grecaptcha-badge:hover {
+                width: 256px !important;
+            }
+
+        .grecaptcha-logo {
+            direction: ltr;
+        }
+    </style>
+}
+<div class=" container mt-c mw-500">
+    <div class="card shadow border-0 mt-5">
+        <div class="card-header bg-primary bg-gradient ml-0 py-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="py-2 fs-4">@ViewData["Title"]</h1>
+                    <h2 class="py-2 fs-5"> برای ادامه شماره موبایل خود را وارد کنید. </h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <input type="hidden" asp-for="Input.Token" id="LoginToken" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                            <div class="form-floating mb-3 right-0">
+                                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="برای مثال: 09200000000" value="@ViewBag.phoneNumber" />
+                                <label asp-for="Input.PhoneNumber">
+                                    <i class="bi bi-phone-fill"></i>
+                                    شماره موبایل </label>
+
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">تایید و ادامه</button>
+
+                            <div>
+                                <p>
+                                    <a asp-page="./login" asp-route-returnUrl="@Model.ReturnUrl">ورود به حساب</a>
+                                </p>
+                            </div>
+                        </form>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js?render=@(GoogleCaptchaConfig.Value.SiteKey)"></script>
+    <script>
+        
+        function getToken() {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@(GoogleCaptchaConfig.Value.SiteKey)', { action: 'submit' }).then(function (token) {
+                    // Add your logic to submit to your backend server here.
+                    document.getElementById("LoginToken").value = token;
+                });
+            });
+        }
+        setInterval(getToken, 115000);
+        $(function () {
+            getToken();
+        })
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

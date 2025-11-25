@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EstateWeb</title>
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+
+    <!--Mine-->
+
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/EstateWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/theme.css" asp-append-version="true" />
+    <!--CDN-->
+    <link rel="stylesheet" href="/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="/lib/Swiper/Swiper.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/toastr/toastr.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/DataTables/datatables.min.css" asp-append-version="true" />
+
+
+
+    @RenderSection("Styles", required: false)
+
+
+</head>
+
+<body>
+
+    <partial name="_Header" />
+
+    <div class="container">
+        <main role="main" class="pb-3" style="margin-top:5rem">
+            @RenderBody()
+        </main>
+    </div>
+
+    <style>
+        #overlay {
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            transition: 1s 0.4s;
+        }
+
+            #overlay img {
+                position: absolute;
+                top: calc(50vh - 110px);
+                left: calc(50vw - 60px);
+            }
+
+        #progress {
+            height: 1px;
+            background: #fff;
+            position: absolute;
+            width: 0; /* will be increased by JS */
+            top: 50%;
+        }
+
+        #progstat {
+            font-size: 0.7em;
+            letter-spacing: 3px;
+            position: absolute;
+            top: calc(50% + 10px);
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+    <div id="overlay" class="loader">
+
+        <img src="/Images/logo.jpg" alt="املاک حمید" class="rounded-circle" width="100" height="100" loading="eager" title="املاک حمید" />
+    </div>
+
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+
+    <script src="/lib/dist/wordifyfa.js" asp-append-version="true"></script>
+
+    <script src="/js/optimizer.js" asp-append-version="true"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+    <!-- Template Main JS File -->
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+
+    <script src="/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="/lib/jquery-libs/jquery.dropdown.min.js" asp-append-version="true"></script>
+
+    <script src="/lib/DataTables/datatables.min.js" asp-append-version="true"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#overlay').fadeOut("slow");
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

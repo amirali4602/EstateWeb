@@ -1,0 +1,308 @@
+﻿@model Estate.Models.Page
+
+@{
+    ViewData["Title"] = "افزودن آگهی";
+}
+
+
+
+
+<div class=" container mt-c mw-500">
+    <div class="card shadow border-0 mt-5">
+        <div class="card-header bg-primary bg-gradient ml-0 py-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="py-2 text-white fs-4">@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        
+                        
+                        <form asp-action="CreateBuy" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="CategoryId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"><option value="" selected disabled hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImageUrl" class="control-label mb-3 text-primary"></label>
+                                <input type="file" class="form-control" accept="capture=camera,image/*" id="upload" oninput="process()" />
+                                
+                                <div>
+                                    <img id="output" />
+                                </div>
+                            </div>
+                            <input type="hidden" name="base64Image" id="base64Image" />
+                            <div class="form-group">
+                                <label asp-for="Gallery" class="control-label mb-3 text-primary"></label>
+                                <input type="file" id="uploades" class="form-control" multiple accept="capture=camera,image/*" oninput="processall()" />
+
+                            </div>
+                            <div id="fileList"></div>
+
+                            <div id="outputes">
+
+                            </div>
+                            <input type="hidden" name="base64Images" id="base64Images" />
+
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label mb-3 text-primary"></label>
+                                <textarea asp-for="Description" class="form-control" style="min-height: 10.5rem;"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Meterage" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Meterage" class="form-control" id="MeterInput" />
+                                <span asp-validation-for="Meterage" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PriceTotal" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="PriceTotal" class="form-control" id="PriceInput"/>
+                                <div></div>
+                                <output class="mx-auto" id="PriceOutput"></output>
+                                <span asp-validation-for="PriceTotal" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PriceMeter" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="PriceMeter" class="form-control" id="PriceMeterInput"/>
+                                <div></div>
+                                <output class="mx-auto" id="PriceMeterOutput"></output>
+                                <span asp-validation-for="PriceMeter" class="text-danger"></span>
+                            </div>
+                            <!--
+
+                            <div class="form-group">
+                                <label asp-for="Deposit" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Deposit" class="form-control" />
+                                <span asp-validation-for="Deposit" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rent" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Rent" class="form-control" />
+                                <span asp-validation-for="Rent" class="text-danger"></span>
+                            </div>
+
+                            -->
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Year" class="form-control" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rooms" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Rooms" class="form-control" />
+                                <span asp-validation-for="Rooms" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Floor" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Floor" class="form-control" />
+                                <span asp-validation-for="Floor" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Units" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="Units" class="form-control" />
+                                <span asp-validation-for="Units" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TotalFloors" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="TotalFloors" class="form-control" />
+                                <span asp-validation-for="TotalFloors" class="text-danger"></span>
+                            </div>
+
+                            <p class="mb-3 text-primary">امکانات ملک</p>
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Elevator" /> @Html.DisplayNameFor(model => model.Elevator)
+                                </label>
+                            </div>
+                            <hr />
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Parking" /> @Html.DisplayNameFor(model => model.Parking)
+                                </label>
+                            </div>
+                            <hr />
+
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="StoreRoom" /> @Html.DisplayNameFor(model => model.StoreRoom)
+                                </label>
+                            </div>
+                            <hr />
+
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Balcony" /> @Html.DisplayNameFor(model => model.Balcony)
+                                </label>
+                            </div>
+                            <hr />
+
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Restored" /> @Html.DisplayNameFor(model => model.Restored)
+                                </label>
+                            </div>
+                            <hr />
+
+
+
+
+                            <div class="form-group">
+                                <label asp-for="DocumentTypeId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="DocumentTypeId" class="form-control" asp-items="ViewBag.DocumentTypeId"><option value="5" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BuildingDirectionId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="BuildingDirectionId" class="form-control" asp-items="ViewBag.BuildingDirectionId"><option value="5" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ToiletId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="ToiletId" class="form-control" asp-items="ViewBag.ToiletId"><option value="4" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CoolingId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="CoolingId" class="form-control" asp-items="ViewBag.CoolingId"><option value="6" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HeatingId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="HeatingId" class="form-control" asp-items="ViewBag.HeatingId"><option value="8" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HotWaterSupplierId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="HotWaterSupplierId" class="form-control" asp-items="ViewBag.HotWaterSupplierId"><option value="4" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FloorMaterialId" class="control-label mb-3 text-primary"></label>
+                                <select asp-for="FloorMaterialId" class="form-control" asp-items="ViewBag.FloorMaterialId"><option value="8" selected hidden>انتخاب کنید</option></select>
+                            </div>
+                            <div class="form-group form-check form-switch mb-3 mt-3">
+                                <label class="form-check-label ">
+                                    <input class="form-check-input" asp-for="isActive" /> @Html.DisplayNameFor(model => model.isActive)
+                                </label>
+                            </div>
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="isFeatured" /> @Html.DisplayNameFor(model => model.isFeatured)
+                                </label>
+                            </div>
+                            <!--
+
+                            <div class="form-group form-check form-switch mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="isRent" /> @Html.DisplayNameFor(model => model.isRent)
+                                </label>
+                            </div>
+                            -->
+                            <div class="form-group">
+                                <input type="submit" value="ایجاد" class="btn btn-primary" />
+                            </div>
+                            
+
+                        </form>
+                        
+                        <div>
+                            <a asp-action="Index">بازگشت</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+    <script src="/lib/dist/wordifyfa.js" asp-append-version="true"></script>
+
+    <script src="https://cdn.tiny.cloud/1/xc1furjetoq69vi18jmr01fd433nexfd2fbg21ej7enz242s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            language: 'fa'
+        });
+    </script>
+    <script>
+
+        const MAX_FILES = 20; // Maximum number of files allowed
+
+
+        document.getElementById('uploades').addEventListener('change', function () {
+
+            const files = this.files;
+
+            const fileList = document.getElementById('fileList');
+
+
+            // Clear existing file list
+
+            fileList.innerHTML = '';
+
+
+            // Check if the number of selected files exceeds the maximum limit
+            // Disable the input if the maximum files are selected
+
+            if (files.length > MAX_FILES) {
+
+                toastr.error(`حداکثر ${MAX_FILES} .عدد عکس مجاز است`);
+
+
+                this.value = ''; // Clear the input
+
+                return;
+
+            }
+
+
+        });
+    </script>
+    <script src="~/js/optimizer.js"></script>
+    <script>
+
+        $("#MeterInput").on('input', function () {
+            $("#PriceMeterInput").val(parseInt($("#PriceInput").val() / this.value));
+
+            $("#PriceMeterOutput").prev().html(parseInt($("#PriceInput").val() / this.value).toLocaleString('en-US') + " تومان");
+            $("#PriceMeterOutput").val(wordifyfa($("#PriceMeterInput").val()) + " تومان");
+        });
+
+        $("#PriceInput").on('input', function () {
+            $("#PriceOutput").val(wordifyfa(this.value + " تومان"));
+            var amount = parseFloat(this.value); // Convert string into float number
+            var newamount = amount.toLocaleString('en-US'); // add comma
+            $("#PriceOutput").prev().html(newamount+" تومان");
+
+            $("#PriceMeterInput").val(parseInt(this.value / $("#MeterInput").val()));
+
+            $("#PriceMeterOutput").prev().html( parseInt(this.value / $("#MeterInput").val()).toLocaleString('en-US') + " تومان");
+            $("#PriceMeterOutput").val(wordifyfa($("#PriceMeterInput").val()) + " تومان");
+        });
+
+        $("#PriceMeterInput").on('input', function () {
+            $("#PriceMeterOutput").val(wordifyfa(this.value + " تومان"));
+            var amount = parseFloat(this.value); // Convert string into float number
+            var newamount = amount.toLocaleString('en-US'); // add comma
+            $("#PriceMeterOutput").prev().html(newamount + " تومان");
+        });
+    </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
