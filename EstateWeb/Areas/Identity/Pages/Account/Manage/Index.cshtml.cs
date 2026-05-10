@@ -20,15 +20,15 @@ namespace EstateWeb.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ApplicationDbContext context,
             IWebHostEnvironment webHostEnvironment)
         {
@@ -93,7 +93,7 @@ namespace EstateWeb.Areas.Identity.Pages.Account.Manage
 
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -110,7 +110,7 @@ namespace EstateWeb.Areas.Identity.Pages.Account.Manage
             var featuredmax = appUser.FeaturedMax;
 
 
-            pageList = _context.Pages.Where(x=>x.CustomerNumber == userName).ToList();
+            pageList = _context.Pages.ToList();
             Username = userName;
             Input = new InputModel
             {

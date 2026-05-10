@@ -1,7 +1,7 @@
 ﻿@model Estate.Models.Page
 
 @{
-    ViewData["Title"] = "ویرایش آگهی";
+    ViewData["Title"] = "ویرایش محصول";
 }
 @section Styles {
     <!-- Demo styles -->
@@ -171,124 +171,37 @@
                                 <input asp-for="Title" class="form-control" />
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Address" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Address" class="form-control" />
-                                <span asp-validation-for="Address" class="text-danger"></span>
-                            </div>
+
                             <div class="form-group">
                                 <label asp-for="Description" class="control-label mb-3 text-primary"></label>
                                 <textarea asp-for="Description" class="form-control" style="min-height: 10.5rem;"></textarea>
                             </div>
                             <div class="form-group">
-                                <label asp-for="PriceTotal" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="PriceTotal" class="form-control" />
-                                <span asp-validation-for="PriceTotal" class="text-danger"></span>
+                                <label asp-for="Price" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="Price" class="form-control" id="PriceInput" />
+                                <div></div>
+                                <output class="mx-auto" id="PriceOutput"></output>
+                                <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="PriceMeter" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="PriceMeter" class="form-control" />
-                                <span asp-validation-for="PriceMeter" class="text-danger"></span>
+                                <label asp-for="Dimensions" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="Dimensions" class="form-control" />
+                                <span asp-validation-for="Dimensions" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Meterage" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Meterage" class="form-control" />
-                                <span asp-validation-for="Meterage" class="text-danger"></span>
+                                <label asp-for="Thickness" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="Thickness" class="form-control" />
+                                <span asp-validation-for="Thickness" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Deposit" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Deposit" class="form-control" />
-                                <span asp-validation-for="Deposit" class="text-danger"></span>
+                                <label asp-for="Mass" class="control-label mb-3 text-primary"></label>
+                                <input type="number" pattern="\d*" asp-for="Mass" class="form-control" />
+                                <span asp-validation-for="Mass" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Rent" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Rent" class="form-control" />
-                                <span asp-validation-for="Rent" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Year" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Year" class="form-control" />
-                                <span asp-validation-for="Year" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Rooms" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Rooms" class="form-control" />
-                                <span asp-validation-for="Rooms" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Floor" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Floor" class="form-control" />
-                                <span asp-validation-for="Floor" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Units" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="Units" class="form-control" />
-                                <span asp-validation-for="Units" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="TotalFloors" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="TotalFloors" class="form-control" />
-                                <span asp-validation-for="TotalFloors" class="text-danger"></span>
-                            </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="Elevator" /> @Html.DisplayNameFor(model => model.Elevator)
-                                </label>
-                            </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="Parking" /> @Html.DisplayNameFor(model => model.Parking)
-                                </label>
-                            </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="StoreRoom" /> @Html.DisplayNameFor(model => model.StoreRoom)
-                                </label>
-                            </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="Balcony" /> @Html.DisplayNameFor(model => model.Balcony)
-                                </label>
-                            </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="Restored" /> @Html.DisplayNameFor(model => model.Restored)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DocumentTypeId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="DocumentTypeId" class="form-control" asp-items="ViewBag.DocumentTypeId"></select>
-                                <span asp-validation-for="DocumentTypeId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BuildingDirectionId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="BuildingDirectionId" class="form-control" asp-items="ViewBag.BuildingDirectionId"></select>
-                                <span asp-validation-for="BuildingDirectionId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ToiletId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="ToiletId" class="form-control" asp-items="ViewBag.ToiletId"></select>
-                                <span asp-validation-for="ToiletId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="CoolingId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="CoolingId" class="form-control" asp-items="ViewBag.CoolingId"></select>
-                                <span asp-validation-for="CoolingId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="HeatingId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="HeatingId" class="form-control" asp-items="ViewBag.HeatingId"></select>
-                                <span asp-validation-for="HeatingId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="HotWaterSupplierId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="HotWaterSupplierId" class="form-control" asp-items="ViewBag.HotWaterSupplierId"></select>
-                                <span asp-validation-for="HotWaterSupplierId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="FloorMaterialId" class="control-label mb-3 text-primary"></label>
-                                <select asp-for="FloorMaterialId" class="form-control" asp-items="ViewBag.FloorMaterialId"></select>
-                                <span asp-validation-for="FloorMaterialId" class="text-danger"></span>
+                                <label asp-for="ColorCode" class="control-label mb-3 text-primary"></label>
+                                <input asp-for="ColorCode" class="form-control" />
+                                <span asp-validation-for="ColorCode" class="text-danger"></span>
                             </div>
                             <div class="form-group form-check form-switch mb-3">
                                 <label class="form-check-label">
@@ -300,12 +213,7 @@
                                     <input class="form-check-input" asp-for="isFeatured" /> @Html.DisplayNameFor(model => model.isFeatured)
                                 </label>
                             </div>
-                            <div class="form-group form-check form-switch mb-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="isRent" /> @Html.DisplayNameFor(model => model.isRent)
-                                </label>
-                            </div>
-                            
+
                             <div class="form-group form-check form-switch mb-3">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="Sold" /> @Html.DisplayNameFor(model => model.Sold)
@@ -318,10 +226,6 @@
                                 <span asp-validation-for="CustomerNumber" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                <label asp-for="AdsMessage" class="control-label mb-3 text-primary"></label>
-                                <input asp-for="AdsMessage" class="form-control" />
-                            </div>
                             <div class="form-group">
                                 <input type="submit" value="ثبت تغییرات" class="btn btn-primary" />
                             </div>
@@ -430,7 +334,7 @@
         });
     </script>
 
-    <script src="https://cdn.tiny.cloud/1/xc1furjetoq69vi18jmr01fd433nexfd2fbg21ej7enz242s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+@if(false){    <script src="https://cdn.tiny.cloud/1/xc1furjetoq69vi18jmr01fd433nexfd2fbg21ej7enz242s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>}
     <script>
         tinymce.init({
             selector: 'textarea',

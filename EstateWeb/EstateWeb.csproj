@@ -70,21 +70,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admin\Views\Employee\CreateBuy.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\CreateBuy.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\CreateRent.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\Delete.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_backupHeader.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\css\Swiper.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admin\Views\Employee\CreateRent.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Estate.DataAccess.Data;
+using Estate.Models;
 using MD.PersianDateTime;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,9 +13,9 @@ namespace EstateWeb.Areas.Customer.Controllers
 
     public class AgentController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public AgentController(UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public AgentController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _context = context;

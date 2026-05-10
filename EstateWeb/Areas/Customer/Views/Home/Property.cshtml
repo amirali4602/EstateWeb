@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = Model.Title;
     ViewData["Canonical"] = ViewBag.Canonical;
-    ViewData["Description"] = Model.Address;
 
     var schemaJson = ViewData["Schema"];
     schemaJson = schemaJson.ToString().Replace("type", "@type").Replace("context", "@context");
@@ -310,38 +309,19 @@
 
             <div class="col-lg-6" dir="rtl">
                 <h2 class="heading text-primary fs-3">@Model.Title</h2>
-                <h3 class="text-muted fs-5">@Model.Address</h3><span onload="this.text = this.text.toLocaleDateString('fa-IR')">@ViewData["Date"]</span>
                 <table class="table table-borderless">
                     <thead>
                         <tr>
-                            <th scope="col">متراژ</th>
-                            @if (ViewBag.Category.Id != 6)
-                            {
-                            <th scope="col">سال ساخت</th>
+                            <th scope="col">ابعاد</th>
+                            <th scope="col">ضخامت</th>
+                            <th scope="col">وزن</th>
+                            <th scope="col">کد رنگ</th>
                             
-
-                            <th scope="col">اتاق</th>
-                            }
-                            @if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
-                            {
-                            <th scope="col">طبقه</th>
-                            }
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>@(Model.Meterage)</td>
-                            @if (ViewBag.Category.Id != 6)
-                            {
-
-                            <td>@(Model.Year)</td>
-                            <td>@(Model.Rooms)</td>
-                            }
-
-                            @if (ViewBag.Category.Id != 7)
-                            {
-                                <td>@(Model.Floor) از @(Model.TotalFloors)</td>
-                            }
+                           
                         </tr>
 
                     </tbody>
@@ -349,45 +329,17 @@
                 <hr />
 
                 <div class="row text-dark">
-                    @if (Model.isRent == true)
-                    {
-                        <div class="col">ودیعه</div>
-
-                        <div class="col">@(Model.Deposit.ToString("N0")) تومان</div>
-
-                    }
-                    else
-                    {
-                        <div class="col">قیمت کل</div>
-
-                        <div class="col"> @(Model.PriceTotal.ToString("N0")) تومان</div>
-
-
-                    }
+                   
 
                 </div>
                 <hr />
                 <div class="row text-dark">
-                    @if (Model.isRent == true)
-                    {
-                        <div class="col">قیمت اجاره</div>
-
-                        <div class="col">@(Model.Rent.ToString("N0")) تومان</div>
-
-                    }
-                    else
-                    {
-                        <div class="col">قیمت هر متر</div>
-
-                        <div class="col"> @(Model.PriceMeter.ToString("N0")) تومان</div>
-
-
-                    }
+                   
 
                 </div>
                 <hr />
                 @{
-                    if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
+                    if (false)
                     {
                             <table class="table table-borderless">
                                 <thead>
@@ -400,50 +352,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            @if (Model.Elevator)
-                                        {
-                                            Write("دارد");
-                                        }
-                                        else
-                                        {
-                                            Write("ندارد");
-
-                                        }
-                                        </td>
-                                        <td>
-                                            @if (Model.Parking)
-                                        {
-                                            Write("دارد");
-                                        }
-                                        else
-                                        {
-                                            Write("ندارد");
-
-                                        }
-                                        </td>
-                                        <td>
-                                            @if (Model.StoreRoom)
-                                        {
-                                            Write("دارد");
-                                        }
-                                        else
-                                        {
-                                            Write("ندارد");
-
-                                        }
-                                        </td>
-                                        <td>
-                                            @if (Model.Balcony)
-                                        {
-                                            Write("دارد");
-                                        }
-                                        else
-                                        {
-                                            Write("ندارد");
-
-                                        }
-                                        </td>
+                                       
                                     </tr>
 
                                 </tbody>
@@ -453,124 +362,38 @@
                     }
                 }
                 
-                @{
-                    if (ViewBag.Category.Id != 7 && ViewBag.Category.Id != 6)
-                    {
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                نمایش همهٔ جزئیات
-                            </button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        نمایش همهٔ جزئیات
+                    </button>
 
-                    }
-                }
+                    
+                
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
-                            <div class="modal-header" dir="ltr">
-                                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-header" dir="rtl">
 
-                                <h5 class="modal-title" id="staticBackdropLabel">ویژگی های ملک</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">ویژگی های محصول</h5>
                             </div>
                             <div class="modal-body">
 
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="text-dark">
-                                            سند
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-center text-dark">
-                                            @ViewBag.DocumentType.Name
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="text-dark">
-                                            جهت ساختمان
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-center text-dark">
-                                            @ViewBag.BuildingDirection.Name
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr />
+
 
                                 <div class="row">
                                     <div class="col">
                                         <p class="text-dark">
-                                            تعداد واحد در طبقه
+                                            ویژگی های بیشتر
                                         </p>
                                     </div>
                                     <div class="col">
                                         <p class="text-center text-dark">
-                                            @Model.Units
+                                           
                                         </p>
                                     </div>
                                 </div>
-                                <hr />
-
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="text-dark">
-                                            وضعیت واحد
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-center text-dark">
-                                            @if (Model.Restored)
-                                            {
-                                                Write("بازسازی شده");
-                                            }
-                                            else
-                                            {
-                                                Write("بازسازی نشده");
-
-                                            }
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <h4>امکانات </h4>
-                                </div>
-                                <div class="row">
-                                    <p class="text-dark">
-                                        جنس کف @ViewBag.FloorMaterial.Name
-                                    </p>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <p class="text-dark">
-
-                                        نوع سرویس بهداشتی @ViewBag.Toilet.Name
-                                    </p>
-                                </div>
-                                <hr />
-
-                                <div class="row">
-                                    <p class="text-dark">
-                                        سرمایش @ViewBag.Cooling.Name
-                                    </p>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <p class="text-dark">
-                                        گرمایش @ViewBag.Heating.Name
-                                    </p>
-                                </div>
-                                <hr />
-
-                                <div class="row">
-                                    <p class="text-dark">
-                                        تامیین کننده آب گرم @ViewBag.HotWaterSupplier.Name
-                                    </p>
-                                </div>
+                                
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">بستن</button>

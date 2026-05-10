@@ -43,7 +43,7 @@ namespace Estate.Utility
             //payamito
             //var client = new RestClient("http://rest.payamak-panel.com/api/SendSMS/SendSMS");
             //var request = new RestRequest();
-            //var textMessage = "سایت املاک حمید\nکد فعالسازی شما : ";
+            //var textMessage = "سایت اپسیلون ام دی اف\nکد فعالسازی شما : ";
             //request.Method = Method.Post;
             //request.AddHeader("content-type", "application/x-www-form-urlencoded");
             //request.AddHeader("postman-token", "fcddb5f4-dc58-c7d5-4bf9-9748710f8789");
@@ -51,7 +51,7 @@ namespace Estate.Utility
             //request.AddParameter("application/x-www-form-urlencoded", "username=0058497277&password=6NOZY&to="+ phoneNumber + "&from=50002002172116&text="+ textMessage + finalString +"&isflash=false", ParameterType.RequestBody);
             //dynamic response = client.Execute(request);
 
-
+            
             if (response != null)
             {
                 return finalString;

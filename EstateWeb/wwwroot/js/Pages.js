@@ -61,13 +61,11 @@ function loadDataTable() {
                 }
             , "width": "1%" },
             { data: 'objPage.title', "width": "1%" },
-            { data: 'objPage.address', "width": "1%" },
-            { data: 'agent', "width": "1%" },
-            { data: 'objPage.priceTotal', "width": "1%" },
-            { data: 'objPage.priceMeter', "width": "1%" },
-            { data: 'objPage.meterage', "width": "1%" },
-            { data: 'objPage.deposit', "width": "1%" },
-            { data: 'objPage.rent', "width": "1%" },
+            { data: 'objPage.price', "width": "1%" },
+            { data: 'objPage.dimensions', "width": "1%" },
+            { data: 'objPage.thickness', "width": "1%" },
+            { data: 'objPage.mass', "width": "1%" },
+            { data: 'objPage.colorCode', "width": "1%" },
             {
                 data: 'objPage.customerNumber', "render": function (data) {
                     if (data == "") {
@@ -93,16 +91,6 @@ function loadDataTable() {
                         data = `<i class="bi bi-star-fill"></i> ویژه`;
                     } else {
                         data = `<i class="bi bi-star"></i> عادی`;
-                    }
-                    return data
-                }, "width": "5%"
-            },
-            {
-                data: 'objPage.isRent', "render": function (data) {
-                    if (data) {
-                        data = `اجاره`;
-                    } else {
-                        data = `خرید`;
                     }
                     return data
                 }, "width": "5%"

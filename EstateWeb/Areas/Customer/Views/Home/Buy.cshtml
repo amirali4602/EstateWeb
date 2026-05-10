@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Page>
 
 @{
-    ViewData["Title"] = "خرید ملک";
+    ViewData["Title"] = "محصولات";
 
     ViewData["Canonical"] = ViewBag.Canonical;
-    ViewData["Description"] = "آگهی‌های خرید و فروش خانه، ویلا، آپارتمان و زمین را در املاک حمید جستجو کنید. ملک دلخواه خود را بیابید.";
+    ViewData["Description"] = "تأمین انواع ورق‌های MDF معمولی، ضد رطوبت و طرح‌دار. مناسب برای کابینت، دکوراسیون و صنایع چوبی. خرید عمده و خرده با تضمین کیفیت";
     dynamic pageDate = ViewBag.pageDate;
     pageDate = pageDate.Split("*");
     var pageDate_i = 0;
@@ -32,7 +32,7 @@
                 <i class="bi bi-search"></i>
                 جستجو
             </button>
-            <input type="text" class="form-control" placeholder="جستجو در همه آگهی ها ..." aria-label="جستجو" aria-describedby="button-addon2" dir="rtl" name="query">
+            <input type="text" class="form-control" placeholder="جستجو در همه محصول ها ..." aria-label="جستجو" aria-describedby="button-addon2" dir="rtl" name="query">
 
            
         </div>
@@ -106,7 +106,7 @@
                     <div class="col-12">
                         <div class="p-3 bg-light">
                             <i class="bi bi-search"></i>
-                            <input name="query" class="form-control" placeholder="جستجو در همه آگهی ها ..." />
+                            <input name="query" class="form-control" placeholder="جستجو در همه محصول ها ..." />
                         </div>
                     </div>
 
@@ -154,7 +154,7 @@
                             <output></output>
                         </div>
                     </div>
-                    <div class="text-primary">نوع ملک</div>
+                    <div class="text-primary">نوع محصول</div>
                     <div class="multiDropDowns">
                         <select style="display:none" name="CategoryId" multiple>
                             @foreach (var item in ViewBag.CategoryId)
@@ -165,79 +165,6 @@
                         </select>
                     </div>
 
-                    <div class="text-primary">سرمایش</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="CoolingId" multiple>
-                            @foreach (var item in ViewBag.CoolingId)
-                            {
-                                <option id="@item.Name" name="CoolingId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-                    <div class="text-primary">گرمایش</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="HeatingId" multiple>
-                            @foreach (var item in ViewBag.HeatingId)
-                            {
-                                <option id="@item.Name" name="HeatingId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-
-                    <div class="text-primary">جهت ساختمان</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="BuildingDirectionId" multiple>
-                            @foreach (var item in ViewBag.BuildingDirectionId)
-                            {
-                                <option id="@item.Name" name="BuildingDirectionId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-                    <div class="text-primary">سند</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="DocumentTypeId" multiple>
-                            @foreach (var item in ViewBag.DocumentTypeId)
-                            {
-                                <option id="@item.Name" name="DocumentTypeId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-                    <div class="text-primary">سرویس بهداشتی</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="ToiletId" multiple>
-                            @foreach (var item in ViewBag.ToiletId)
-                            {
-                                <option id="@item.Name" name="ToiletId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-
-
-                    <div class="text-primary">تامین کننده آب گرم</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="HotWaterSupplierId" multiple>
-                            @foreach (var item in ViewBag.HotWaterSupplierId)
-                            {
-                                <option id="@item.Name" name="HotWaterSupplierId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
-                    <div class="text-primary">جنس کف</div>
-                    <div class="multiDropDowns">
-                        <select style="display:none" name="FloorMaterialId" multiple>
-                            @foreach (var item in ViewBag.FloorMaterialId)
-                            {
-                                <option id="@item.Name" name="FloorMaterialId" value="@item.Id">@item.Name</option>
-
-                            }
-                        </select>
-                    </div>
 
                     <hr />
                     <div class="row gx-5">
@@ -282,7 +209,7 @@
 <div class="section section-properties">
     <div class="container">
         <h2 class="font-weight-bold text-primary heading">
-            خرید ملک
+            خرید محصول
         </h2>
         <div class="row">
             @{
@@ -308,54 +235,8 @@
                         <div class="card-body">
                             <h3 class="card-title fs-5">@(page.Title)</h3>
                             <p class="card-text">
-                                <span class="fs-6 text-dark fw-bold">
-                                    @{
-                                        if (!page.isRent)
-                                        {
-                                            Write("قیمت : " + page.PriceTotal.ToString("N0") + " تومان");
-                                        }
-                                        else if (page.Deposit != 0 && page.Rent != 0)
-                                        {
-                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان" + "\n" + "اجاره : " + page.Rent.ToString("N0") + " تومان");
+                               
 
-                                        }
-                                        else if (page.Deposit != 0)
-                                        {
-                                            Write("رهن : " + page.Deposit.ToString("N0") + " تومان");
-                                        }
-                                        else if (page.Rent != 0)
-                                        {
-                                            Write("اجاره : " + page.Rent.ToString("N0") + " تومان");
-
-                                        }
-                                    }
-
-                                </span>
-
-
-
-                                <span class="d-block text-dark">
-                                    <span class="icons8-location mx-2"> </span>
-
-                                    @(page.Address)
-                                </span>
-
-                                <div class="specs d-flex mb-4 base-infos text-dark">
-                                    <span class="d-block d-flex align-items-center me-3">
-                                        <span class="icons8-bed-I mx-2"> </span>
-                                        <span class="caption"> @(page.Rooms) اتاق</span>
-                                    </span>
-                                    <span class="d-block d-flex align-items-center">
-                                        <span class="icons8-metere mx-2"> </span>
-
-                                        <span class="caption">@(page.Meterage) متر</span>
-                                    </span>
-                                    <span class="d-block d-flex align-items-center">
-                                        <span class="icons8-construction mx-2"> </span>
-
-                                        <span class="caption"> ساخت @(page.Year)</span>
-                                    </span>
-                                </div>
                             </p>
 
                         </div>

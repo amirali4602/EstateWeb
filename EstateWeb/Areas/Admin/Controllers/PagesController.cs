@@ -31,7 +31,7 @@ namespace EstateWeb.Areas.Admin.Controllers
         // GET: Admin/Pages
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Pages.Include(p => p.Category).Include(p => p.Cooler).Include(p => p.Direction).Include(p => p.Document).Include(p => p.Heater).Include(p => p.Toilet).Include(p => p.WaterSupplier).Include(p => p.floorMaterial);
+            var applicationDbContext = _context.Pages.Include(p => p.Category);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -45,13 +45,6 @@ namespace EstateWeb.Areas.Admin.Controllers
 
             var page = await _context.Pages
                 .Include(p => p.Category)
-                .Include(p => p.Cooler)
-                .Include(p => p.Direction)
-                .Include(p => p.Document)
-                .Include(p => p.Heater)
-                .Include(p => p.Toilet)
-                .Include(p => p.WaterSupplier)
-                .Include(p => p.floorMaterial)
                 .FirstOrDefaultAsync(m => m.PageId == id);
             if (page == null)
             {
@@ -61,17 +54,11 @@ namespace EstateWeb.Areas.Admin.Controllers
             return View(page);
         }
 
+      
         // GET: Admin/Pages/Create
-        public IActionResult CreateRent()
+        public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name");
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name");
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name");
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name");
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name");
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name");
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name");
             return View();
         }
 
@@ -80,89 +67,7 @@ namespace EstateWeb.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateRent([Bind("PageId,CategoryId,ImageUrl,Title,Address,Description,PriceTotal,Meterage,Deposit,Rent,Year,Rooms,Floor,Units,TotalFloors,Elevator,Parking,StoreRoom,Balcony,Restored,DocumentTypeId,BuildingDirectionId,ToiletId,CoolingId,HeatingId,HotWaterSupplierId,FloorMaterialId,Gallery,isActive,isFeatured,PriceMeter,isRent")] Page page, string? base64Image, string? base64Images)
-        {
-            if (ModelState.IsValid)
-            {
-                page.isRent = true;
-
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (base64Image != null)
-                {
-                    byte[] imageBytes = Convert.FromBase64String(base64Image);
-
-                    string fileName = Guid.NewGuid().ToString() + ".png";
-                    string pagePath = Path.Combine(wwwRootPath, @"Images\Pages");
-
-
-                    await System.IO.File.WriteAllBytesAsync(Path.Combine(pagePath, fileName), imageBytes);
-
-                    page.ImageUrl = @"\Images\Pages\" + fileName;
-                }
-                if (base64Images != null)
-                {
-                    var allbytes = base64Images.Split("\n").SkipLast(1).ToArray();
-
-                    var AllGallery = "";
-                    foreach (var f in allbytes)
-                    {
-                        byte[] imageBytes = Convert.FromBase64String(f);
-
-
-                        // Save the image or process it as needed
-
-                        // Example: Saving to file system
-                        string fileName = Guid.NewGuid().ToString() + ".png";
-                        string pagePath = Path.Combine(wwwRootPath, @"Images\Pages");
-
-                        //var filePath = Path.Combine("wwwroot/Images/Pages", "uploadedImage.png"); // Adjust path and filename as needed
-
-                        await System.IO.File.WriteAllBytesAsync(Path.Combine(pagePath, fileName), imageBytes);
-
-                        AllGallery += @"\Images\Pages\" + fileName + " ";
-                    }
-                    page.Gallery = AllGallery.Remove(AllGallery.Length - 1);
-
-                }
-                page.Date = DateTime.Now;
-                        _context.Add(page);
-                await _context.SaveChangesAsync();
-                TempData["success"] = "آگهی ایجاد شد.";
-
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", page.CategoryId);
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name", page.CoolingId);
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name", page.BuildingDirectionId);
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name", page.DocumentTypeId);
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name", page.HeatingId);
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name", page.ToiletId);
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name", page.HotWaterSupplierId);
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name", page.FloorMaterialId);
-            return View(page);
-        }
-
-
-        // GET: Admin/Pages/Create
-        public IActionResult CreateBuy()
-        {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name");
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name");
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name");
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name");
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name");
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name");
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name");
-            return View();
-        }
-
-        // POST: Admin/Pages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateBuy([Bind("PageId,CategoryId,ImageUrl,Title,Address,Description,PriceTotal,Meterage,Deposit,Rent,Year,Rooms,Floor,Units,TotalFloors,Elevator,Parking,StoreRoom,Balcony,Restored,DocumentTypeId,BuildingDirectionId,ToiletId,CoolingId,HeatingId,HotWaterSupplierId,FloorMaterialId,Gallery,isActive,isFeatured,PriceMeter,isRent")] Page page, string? base64Image, string? base64Images)
+        public async Task<IActionResult> Create([Bind("PageId,CategoryId,ImageUrl,Title,Description,Price,Dimensions,Thickness,Mass,ColorCode,Gallery,isActive,isFeatured,PriceMeter,isRent")] Page page, string? base64Image, string? base64Images)
         {
             if (ModelState.IsValid)
             {
@@ -208,18 +113,11 @@ namespace EstateWeb.Areas.Admin.Controllers
                 page.Date = DateTime.Now;
                 _context.Add(page);
                 await _context.SaveChangesAsync();
-                TempData["success"] = "آگهی ایجاد شد.";
+                TempData["success"] = "محصول ایجاد شد.";
 
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", page.CategoryId);
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name", page.CoolingId);
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name", page.BuildingDirectionId);
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name", page.DocumentTypeId);
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name", page.HeatingId);
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name", page.ToiletId);
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name", page.HotWaterSupplierId);
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name", page.FloorMaterialId);
             return View(page);
         }
 
@@ -239,13 +137,6 @@ namespace EstateWeb.Areas.Admin.Controllers
             }
             
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", page.CategoryId);
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name", page.CoolingId);
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name", page.BuildingDirectionId);
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name", page.DocumentTypeId);
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name", page.HeatingId);
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name", page.ToiletId);
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name", page.HotWaterSupplierId);
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name", page.FloorMaterialId);
             return View(page);
         }
 
@@ -254,7 +145,7 @@ namespace EstateWeb.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-                public async Task<IActionResult> Edit([Bind("PageId,CategoryId,ImageUrl,Title,Address,Description,PriceTotal,Meterage,Deposit,Rent,Year,Rooms,Floor,Units,TotalFloors,Elevator,Parking,StoreRoom,Balcony,Restored,DocumentTypeId,BuildingDirectionId,ToiletId,CoolingId,HeatingId,HotWaterSupplierId,FloorMaterialId,Gallery,isActive,isFeatured,PriceMeter,isRent,CustomerNumber,AdsMessage,Sold")] Page page, string? base64Image, string? base64Images)
+                public async Task<IActionResult> Edit([Bind("PageId,CategoryId,ImageUrl,Title,Description,Price,Dimensions,Thickness,Mass,ColorCode,Gallery,isActive,isFeatured,PriceMeter,isRent,CustomerNumber,AdsMessage,Sold")] Page page, string? base64Image, string? base64Images)
         {
 
             if (ModelState.IsValid)
@@ -339,18 +230,11 @@ namespace EstateWeb.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                TempData["success"] = "تغییرات آگهی اعمال شد";
+                TempData["success"] = "تغییرات محصول اعمال شد";
 
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", page.CategoryId);
-            ViewData["CoolingId"] = new SelectList(_context.Coolings, "Id", "Name", page.CoolingId);
-            ViewData["BuildingDirectionId"] = new SelectList(_context.BuildingDirections, "Id", "Name", page.BuildingDirectionId);
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Name", page.DocumentTypeId);
-            ViewData["HeatingId"] = new SelectList(_context.Heatings, "Id", "Name", page.HeatingId);
-            ViewData["ToiletId"] = new SelectList(_context.Toilet, "Id", "Name", page.ToiletId);
-            ViewData["HotWaterSupplierId"] = new SelectList(_context.HotWaterSuppliers, "Id", "Name", page.HotWaterSupplierId);
-            ViewData["FloorMaterialId"] = new SelectList(_context.floorMaterials, "Id", "Name", page.FloorMaterialId);
             return View(page);
         }
 
@@ -364,13 +248,6 @@ namespace EstateWeb.Areas.Admin.Controllers
 
             var page = await _context.Pages
                 .Include(p => p.Category)
-                .Include(p => p.Cooler)
-                .Include(p => p.Direction)
-                .Include(p => p.Document)
-                .Include(p => p.Heater)
-                .Include(p => p.Toilet)
-                .Include(p => p.WaterSupplier)
-                .Include(p => p.floorMaterial)
                 .FirstOrDefaultAsync(m => m.PageId == id);
             if (page == null)
             {
@@ -415,7 +292,7 @@ namespace EstateWeb.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            TempData["success"] = "آگهی پاک شد";
+            TempData["success"] = "محصول پاک شد";
             return RedirectToAction(nameof(Index));
         }
 
@@ -429,7 +306,7 @@ namespace EstateWeb.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
             var agent = _context.ApplicationUsers;
-            List<Page> objPageList = _context.Pages.Include(p => p.Category).Include(p => p.Cooler).Include(p => p.Direction).Include(p => p.Document).Include(p => p.Heater).Include(p => p.Toilet).Include(p => p.WaterSupplier).Include(p => p.floorMaterial).OrderByDescending(x => x.Date).ToList();
+            List<Page> objPageList = _context.Pages.Include(p => p.Category).ToList();
             dynamic myList = new List<dynamic>();
             dynamic User;
             dynamic Username;
@@ -448,24 +325,7 @@ namespace EstateWeb.Areas.Admin.Controllers
                     }
                 }
                 myList.Add(new { objPage,agent =Username});
-                //if(objPage.CustomerNumber == null)
-                //{
-                //    User = agent.Where(x => x.UserName == objPage.Agent.Number).FirstOrDefault();
-                //}
-                //else
-                //{
-                //    User = agent.Where(x => x.UserName == objPage.CustomerNumber).FirstOrDefault();
-                //}
-                //if (User.Name != null && User.Name != "")
-                //{
-                //    objPage.Name = User.Name;
-
-                //}
-                //else
-                //{
-                //    objPage.Name = "مشتری";
-
-                //}
+               
             }
             
             return Json(new { data = myList });

@@ -22,9 +22,9 @@ namespace EstateWeb.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public HomeController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -109,8 +109,6 @@ namespace EstateWeb.Areas.Admin.Controllers
                     selectedUser.Number = user.UserName;
                     selectedUser.Role = user.Role;
                     selectedUser.IsAgent = user.IsAgent;
-                    selectedUser.isOnlyRent = user.isOnlyRent;
-                    selectedUser.isRent = user.isRent;
                     selectedUser.permisionDelete = user.permisionDelete;
                     selectedUser.permisionEdit = user.permisionEdit;
                     selectedUser.Comment = user.Comment;

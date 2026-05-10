@@ -1,6 +1,8 @@
 using AspNetCore.ReCaptcha;
 using AspNetCore.SEOHelper;
 using Estate.DataAccess.Data;
+using Estate.DataAccess.Data.Seeder;
+using Estate.Models;
 using Estate.Utility;
 using EstateWeb.Core;
 using Microsoft.AspNetCore.Identity;
@@ -18,8 +20,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.Configure<GoogleCaptchaConfig>(builder.Configuration.GetSection("GoogleReCaptcha"));
 builder.Services.AddTransient(typeof(GoogleCaptchaService));
-builder.Services.AddIdentity<IdentityUser,IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options => {
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
@@ -28,24 +38,17 @@ builder.Services.ConfigureApplicationCookie(options => {
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Default Password settings.
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 0;
-});
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<AdminSeeder>();
 var app = builder.Build();
 // Automatically apply any pending migrations
-
 using (var scope = app.Services.CreateScope())
 
 {
+    var services = scope.ServiceProvider;
+    var seeder = services.GetRequiredService<AdminSeeder>();
+    await seeder.SeedAdminAsync();
 
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 

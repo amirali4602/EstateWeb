@@ -15,16 +15,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using EstateWeb.Core;
+using Estate.Models;
 
 namespace EstateWeb.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly GoogleCaptchaService _captchaService;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, GoogleCaptchaService captchaService)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, GoogleCaptchaService captchaService)
         {
             _signInManager = signInManager;
             _logger = logger;

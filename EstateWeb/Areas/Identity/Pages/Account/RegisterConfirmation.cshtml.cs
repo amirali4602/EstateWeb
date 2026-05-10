@@ -27,20 +27,20 @@ namespace EstateWeb.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager;
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
-        private readonly Microsoft.AspNetCore.Identity.IUserStore<IdentityUser> _userStore;
-        private readonly Microsoft.AspNetCore.Identity.IUserEmailStore<IdentityUser> _emailStore;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> _userStore;
+        private readonly Microsoft.AspNetCore.Identity.IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly ApplicationDbContext _context;
         private readonly GoogleCaptchaService _captchaService;
 
         public RegisterConfirmationModel(
-            Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager,
+            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
             Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager,
-            Microsoft.AspNetCore.Identity.IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
              ApplicationDbContext context
             ,GoogleCaptchaService captchaService)
@@ -243,7 +243,7 @@ namespace EstateWeb.Areas.Identity.Pages.Account
             return RedirectToPage("RegisterConfirmation", new { Phone = TempData["PhoneNumber"].ToString() });
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
@@ -251,8 +251,8 @@ namespace EstateWeb.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }

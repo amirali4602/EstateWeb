@@ -76,20 +76,6 @@
                         </div>
 
                         <hr />
-                        <div class="form-group form-check form-switch mb-3">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="isRent" /> @Html.DisplayNameFor(model => model.isRent)
-                            </label>
-                        </div>
-
-                        <hr />
-                        <div class="form-group form-check form-switch mb-3">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="isOnlyRent" /> @Html.DisplayNameFor(model => model.isOnlyRent)
-                            </label>
-                        </div>
-
-                        <hr />
 
                         <div class="form-floating mb-3">
                             <input asp-for="whatsApp" class="form-control" placeholder="Please enter your name." />
@@ -170,7 +156,7 @@
 
 @section Scripts {
 
-    <script src="https://cdn.tiny.cloud/1/xc1furjetoq69vi18jmr01fd433nexfd2fbg21ej7enz242s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+@if(false){    <script src="https://cdn.tiny.cloud/1/xc1furjetoq69vi18jmr01fd433nexfd2fbg21ej7enz242s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>}
     <script>
         tinymce.init({
             selector: 'textarea',

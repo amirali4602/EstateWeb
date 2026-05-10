@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Page> 
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "گروه مشاورین تخصصی املاک حمید رشت";
+    ViewData["Title"] = "گروه مشاورین تخصصی کارگاه اپسیلون رشت";
 
     ViewData["Canonical"] = ViewBag.Canonical;
 
-    ViewData["Description"] = "ارائه متمایز خدمات ملکی در دپارتمان تخصصی املاک حمید در استان گیلان و منطقه 1 رشت ";
+    ViewData["Description"] = "ارائه متمایز خدمات محصولی در دپارتمان تخصصی کارگاه اپسیلون در استان گیلان و منطقه 1 رشت ";
     dynamic featuredesDate = ViewBag.featuredsDate;
     featuredesDate = featuredesDate.Split("*");
     var featuredesDate_i = 0;
@@ -41,12 +41,12 @@
                     "@@context": "https://schema.org",
                     "@@type": "Corporation",
                     "id": "https://www.hamid-estate.com/#corporation",
-                    "name": "‌املاک حمید",
+                    "name": "‌کارگاه اپسیلون",
                     "alternateName": [
-                        "املاک حمید",
+                        "کارگاه اپسیلون",
                         "hamid real estate"
                     ],
-                    "legalName": "املاک حمید",
+                    "legalName": "کارگاه اپسیلون",
                     "url": "https://www.hamid-estate.com",
                     "logo": "",
                     "email": "info@@hamid-estate.com",
@@ -89,17 +89,17 @@
                     "@@context": "https://schema.org",
                     "@@type": "WebSite",
                     "id": "https://www.hamid-estate.com/#webSite",
-                    "name": "‌املاک حمید",
+                    "name": "‌کارگاه اپسیلون",
                     "url": "https://www.hamid-estate.com",
                     "copyrightHolder": {
                         "@@type": "Corporation",
                         "id": "https://www.hamid-estate.com/#corporation",
-                        "name": "املاک حمید"
+                        "name": "کارگاه اپسیلون"
                     },
                     "creator": {
                         "@@type": "Corporation",
                         "id": "https://www.hamid-estate.com/#corporation",
-                        "name": "املاک حمید"
+                        "name": "کارگاه اپسیلون"
                     }
                 }
             ]
@@ -108,52 +108,25 @@
 }
 <!-- Hero -->
 <div class="p-5 text-center bg-image rounded-3" id="Hero-img" style="
-    background-image: url('/images/home/Hero.webp?val=1');
+    background-image: url('/images/home/bg-scaled.webp?val=1');
     height: 100vh;
   ">
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
-                @if (SignInManager.IsSignedIn(User) && (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin)))
-                {
-                    <h1 class="heading fs-2" data-aos="fade-up">
-                        <a class="nav-link text-light" asp-area="Admin" asp-controller="Employee" asp-action="Index" title="ثبت آگهی">
-                            آگهی خود را بصورت رایگان ثبت کنید
-
-                        </a>
-                    </h1>
-
-                }
-                else if (SignInManager.IsSignedIn(User))
-                {
-
-                    <h1 class="heading fs-2" data-aos="fade-up">
-                        <a class="nav-link text-light" asp-area="Customer" asp-controller="Ads" asp-action="Index" title="ثبت آگهی">
-                            آگهی خود را بصورت رایگان ثبت کنید
-
-                        </a>
-                    </h1>
-                }
-                else
-                {
-                    <h1 class="heading fs-2" data-aos="fade-up">
-                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login" title="ثبت آگهی">
-                            آگهی خود را بصورت رایگان ثبت کنید
-
-                        </a>
-                    </h1>
-                }
-
-                <h2 class="text-white fs-2" data-aos="fade-up">
-                    سریعترین راه برای رسیدن به خانه رویاهایتان
-                </h2>
+               
+            <h2 class="text-white fs-2 lh-lg" data-aos="fade-up">
+                کیفیت، تنوع و زیبایی برای هر پروژه‌ای
+                </br>
+                از دکوراسیون داخلی تا صنایع چوبی
+            </h2>
                 <form asp-action="buy"
-                      class="narrow-w form-search d-flex align-items-stretch mb-3"
+                      class="narrow-w form-search d-flex align-items-stretch gap-1"
                       data-aos="fade-up"
                       data-aos-delay="200">
                     <input type="text"
                            class="form-control px-4 rounded-pill"
-                           placeholder="آدرس مورد نظر شما برای مثال رشت ,معلم" name="query" />
+                           placeholder="محصول مورد نظر شما" name="query" />
                     <button type="submit" class="btn btn-primary rounded-circle" aria-label="جستجو"><i class="bi bi-search-heart"></i></button>
                 </form>
             </div>
@@ -165,7 +138,7 @@
 
 <div class="container my-5">
     <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 pb-4">
-        ملک ویژه
+        محصولات ویژه
     </h2>
     <!-- Swiper -->
     <div dir="rtl" class="swiper mySwiperFeatured ">
@@ -194,53 +167,12 @@
                             <h3 class="card-title fs-5">@(featured.Title)</h3>
                             <p class="card-text">
                                 <span class="fs-6 text-dark fw-bold">
-                                    @{
-                                        if (!featured.isRent)
-                                        {
-                                            Write("قیمت : "+featured.PriceTotal.ToString("N0") + " تومان");
-                                        }
-                                        else if (featured.Deposit != 0 && featured.Rent != 0)
-                                        {
-                                            Write("رهن : " + featured.Deposit.ToString("N0") + " تومان" + "\n" + "اجاره : " + featured.Rent.ToString("N0") + " تومان");
-
-                                        }
-                                        else if (featured.Deposit != 0)
-                                        {
-                                            Write("رهن : "+featured.Deposit.ToString("N0") + " تومان");
-                                        }
-                                        else if (featured.Rent != 0)
-                                        {
-                                            Write("اجاره : "+featured.Rent.ToString("N0") + " تومان");
-
-                                        }
-                                    }
+                                  
 
                                 </span>
                                 
                            
 
-                                <span class="d-block text-dark">
-                                    <span class="icons8-location mx-2"> </span>
-
-                                    @(featured.Address)
-                                    </span>
-
-                            <div class="specs d-flex mb-4 base-infos text-dark">
-                                <span class="d-block d-flex align-items-center me-3">
-                                        <span class="icons8-bed-I mx-2"> </span>
-                                    <span class="caption"> @(featured.Rooms) اتاق</span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                        <span class="icons8-metere mx-2"> </span>
-
-                                    <span class="caption">@(featured.Meterage) متر</span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                        <span class="icons8-construction mx-2"> </span>
-
-                                    <span class="caption"> ساخت @(featured.Year)</span>
-                                </span>
-                                </div>
                             </p>
 
                         </div>
@@ -272,7 +204,7 @@
 
     <div class="container">
     <h4 class="font-weight-bold heading text-primary mb-4 mb-md-0 pb-4">
-        تیم ما در دپارتمان املاک حمید
+        تیم ما در دپارتمان کارگاه اپسیلون
     </h4>
         <!-- Swiper -->
         <div dir="rtl" class="swiper mySwiper">

@@ -1,11 +1,18 @@
 ﻿@model IEnumerable<Estate.Models.Page>
 
 @{
-    ViewData["Title"] = "لیست املاک";
+    ViewData["Title"] = "لیست محصول";
 }
 <partial name="_Notifications" />
 
-<h1 class="pt-5">املاک</h1>
+<div class="d-flex align-items-center justify-content-between gap-3 pt-5">
+    <h1 class="mb-0">محصول</h1>
+    <a class="text-decoration-none text-dark shadow rounded p-2 btn btn-primary" asp-area="Admin" asp-controller="Pages" asp-action="Create" title="افزودن محصول">
+        <i class="bi bi-plus-lg"></i>
+        افزدون کالا
+    </a>
+</div>
+
 
 
 <table id="tblData" class="table table-bordered table-striped nowrap">
@@ -14,17 +21,14 @@
             <th>کد صفحه</th>
             <th>عکس</th>
             <th>عنوان</th>
-            <th>آدرس</th>
-            <th>مشاور</th>
-            <th>قیمت کل</th>
-            <th>متری</th>
-            <th>متراژ</th>
-            <th>ودیعه</th>
-            <th>اجاره</th>
-            <th> مشتری</th>
-            <th> نمایش</th>
+            <th>قیمت</th>
+            <th>ابعاد</th>
+            <th>ضخامت</th>
+            <th>وزن</th>
+            <th>کد رنگ</th>
+            <th>شماره تماس</th>
+            <th> وضعیت نمایش</th>
             <th> ویژه</th>
-            <th> ملک</th>
             <th> تاریخ ثبت</th>
         </tr>
     </thead>
