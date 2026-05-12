@@ -5,7 +5,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand text-dark" asp-area="Shop" asp-controller="Home" asp-action="Index">
                 <img src="~/Images/Header3.png" width="75" height="75" alt="لوگو کارگاه اپسیلون" loading="eager" title="صداقت، دقت و سرعت" />
             </a>
             <nav class=" navbar-expand justify-content-center d-inline-flex fs-5" id="navbarDefault">
@@ -13,13 +13,13 @@
                     
                     
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="Shop" asp-controller="Home" asp-action="Index">محصول</a>
+                        <a class="nav-link" asp-area="Shop" asp-controller="Home" asp-action="Buy">محصول</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+                        <a class="nav-link " asp-area="Shop" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+                        <a class="nav-link " asp-area="Shop" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
                     </li>
                     @if (User.IsInRole(SD.Role_Admin))
                     {
@@ -57,13 +57,13 @@
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Shop" asp-controller="Home" asp-action="Index">محصول</a>
+                            <a class="nav-link" asp-area="Shop" asp-controller="Home" asp-action="Buy">محصول</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+                            <a class="nav-link " asp-area="Shop" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+                            <a class="nav-link " asp-area="Shop" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
                         </li>
                         @if (User.IsInRole(SD.Role_Admin))
                         {

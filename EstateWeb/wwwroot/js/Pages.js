@@ -39,7 +39,7 @@ function loadDataTable() {
                            <a href="/admin/pages/delete?id=${data}" class="btn btn-danger mx-2">
                            <i class="bi bi-trash-fill"></i>
 
-                           <a href="/Customer/Home/Property?pageId=${data}" class="btn btn-info mx-2">
+                           <a href="/Shop/Home/Property?pageId=${data}" class="btn btn-info mx-2">
                            <i class="bi bi-eye-fill"></i>
                     </div>`
                 }, "width": "5%"
