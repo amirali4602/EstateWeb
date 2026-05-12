@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Domain.Entities.Page>
+
+@{
+    ViewData["Title"] = "لیست محصول";
+}
+<partial name="_Notifications" />
+
+<div class="d-flex align-items-center justify-content-between gap-3 pt-5">
+    <h1 class="mb-0">محصول</h1>
+    <a class="text-decoration-none text-dark shadow rounded p-2 btn btn-primary" asp-area="Admin" asp-controller="Employee" asp-action="Create" title="افزودن محصول">
+        <i class="bi bi-plus-lg"></i>
+        افزدون کالا
+    </a>
+</div>
+
+
+
+<table id="tblData" class="table table-bordered table-striped nowrap">
+    <thead>
+        <tr>
+            <th>کد صفحه</th>
+            <th>عکس</th>
+            <th>عنوان</th>
+            <th>قیمت</th>
+            <th>ابعاد</th>
+            <th>ضخامت</th>
+            <th>وزن</th>
+            <th>کد رنگ</th>
+            <th>شماره تماس</th>
+            <th> وضعیت نمایش</th>
+            <th> ویژه</th>
+            <th> تاریخ ثبت</th>
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+    <script src="/js/Pages.js"></script>
+}
