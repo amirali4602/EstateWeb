@@ -1,4 +1,4 @@
-﻿@using Infrastructure
+﻿@using Domain.Enums
    <!-- ======= Header/Navbar ======= -->
 <header>
     <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
@@ -13,7 +13,7 @@
                 <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
 
                 <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
-                @if (User.IsInRole(SD.Role_Admin))
+                @if (User.IsInRole(UserRoles.Role_Admin))
                 {
                     <div class="text-light">
                         <i class="bi bi-gear"></i>
@@ -55,7 +55,7 @@
                     <li class="nav-item">
                         <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
                     </li>
-                    @if (User.IsInRole(SD.Role_Admin))
+                    @if (User.IsInRole(UserRoles.Role_Admin))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,7 +109,7 @@
         <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
 
         <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
-        @if (User.IsInRole(SD.Role_Admin))
+        @if (User.IsInRole(UserRoles.Role_Admin))
         {
             <div class="text-light">
                 <i class="bi bi-gear"></i>
@@ -156,7 +156,7 @@
             <a class="nav-link px-2 " asp-area="Customer" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
         </li>
         <li><a class="nav-link px-2 " asp-area="Customer" asp-controller="Home" asp-action="ContactUs">تماس با ما</a></li>
-        @if (User.IsInRole(SD.Role_Admin))
+        @if (User.IsInRole(UserRoles.Role_Admin))
         {
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

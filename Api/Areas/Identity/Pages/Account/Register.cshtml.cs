@@ -12,8 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Core;
 using DataAccess.Persistence.Contexts;
+using DataAccess.Utility;
 using Domain.Entities;
-using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -130,7 +130,7 @@ namespace Api.Areas.Identity.Pages.Account
                     smsDto1.FailedTimes = 0;
                     smsDto1.sentStatus = "777";
                     SmsSender sms = new SmsSender();
-                    var smsPass = sms.sendmessage(Input.PhoneNumber);
+                    var smsPass = sms.Sendmessage(Input.PhoneNumber);
                     smsDto1.sentStatus = smsPass;
 
                     TempData["success"] = "کد به شماره " + Input.PhoneNumber.ToString() + " ارسال شد";
@@ -147,7 +147,7 @@ namespace Api.Areas.Identity.Pages.Account
 
                     smsDto.sentStatus = "777";
                     SmsSender sms = new SmsSender();
-                    var smsPass = sms.sendmessage(Input.PhoneNumber);
+                    var smsPass = sms.Sendmessage(Input.PhoneNumber);
                     smsDto.sentStatus = smsPass;
                     TempData["success"] = "کد به شماره " + Input.PhoneNumber.ToString() + " ارسال شد";
 

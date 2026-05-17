@@ -1,13 +1,14 @@
 using Api.Core;
-using AspNetCore.ReCaptcha;
 using AspNetCore.SEOHelper;
 using DataAccess.Persistence.Contexts;
 using DataAccess.Persistence.Seed;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using PayamakCore;
+using DataAccess.IRepositories;
+using DataAccess.Repositories;
+using Application.IServices;
+using Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,11 @@ builder.Services.AddRazorPages();
 
 
 builder.Services.AddScoped<AdminSeeder>();
+
+// register repositories and services
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 var app = builder.Build();
 // Automatically apply any pending migrations
 using (var scope = app.Services.CreateScope())

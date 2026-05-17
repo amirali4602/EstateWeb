@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Api.Core;
+using DataAccess.Persistence.Contexts;
 using Domain.Entities;
-using Infrastructure;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +14,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-using DataAccess.Persistence.Contexts;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Api.Areas.Identity.Pages.Account
 {
@@ -113,12 +113,12 @@ namespace Api.Areas.Identity.Pages.Account
             ViewData["Phone"] = Phone;
             //PhoneNumber = TempData["PhoneNumber"].ToString();
             //Code = TempData["Code"].ToString();
-            if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
+            if (!_roleManager.RoleExistsAsync(UserRoles.Role_Customer).GetAwaiter().GetResult())
             {
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Customer)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Admin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Company)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Employee)).GetAwaiter().GetResult();
             }
             Input = new()
             {
@@ -182,7 +182,7 @@ namespace Api.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                        await _userManager.AddToRoleAsync(user, UserRoles.Role_Customer);
 
                     }
 
@@ -208,7 +208,7 @@ namespace Api.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                        await _userManager.AddToRoleAsync(user, UserRoles.Role_Customer);
 
                     }
 

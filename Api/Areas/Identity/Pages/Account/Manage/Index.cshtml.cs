@@ -10,7 +10,6 @@ using Azure;
 using DataAccess;
 using DataAccess.Persistence.Contexts;
 using Domain.Entities;
-using Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.Persistence.Contexts;
+using Domain.Entities;
+using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Infrastructure;
-using DataAccess.Persistence.Contexts;
-using Domain.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Api.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin + ","+ SD.Role_Employee)]
+    [Authorize(Roles = UserRoles.Role_Admin + ","+ UserRoles.Role_Employee)]
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;

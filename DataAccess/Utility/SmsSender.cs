@@ -1,19 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using PayamakCore.Dto;
-using PayamakCore.Interface;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestSharp;
 
-namespace Infrastructure;
+namespace DataAccess.Utility;
 
 public class SmsSender 
 {
-    public string sendmessage(string phoneNumber)
+    public string Sendmessage(string phoneNumber)
     {
         var chars = "0123456789";
         var stringChars = new char[5];
@@ -27,8 +18,10 @@ public class SmsSender
         var finalString = new string(stringChars);
         //gilpayamak
         var client = new RestClient("http://188.0.240.110/api/select");
-        var request = new RestRequest();
-        request.Method = Method.Post;
+        var request = new RestRequest
+        {
+            Method = Method.Post
+        };
         request.AddHeader("cache-control", "no-cache");
         request.AddHeader("Content-Type", "application/json");
         request.AddJsonBody("{\"op\" : \"patternV2\"" +

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-namespace Infrastructure;
+namespace DataAccess.Utility;
 public class EmailSender : IEmailSender
 {
     public Task SendEmailAsync(string email, string subject, string htmlMessage)

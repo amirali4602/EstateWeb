@@ -1,6 +1,6 @@
 ﻿using DataAccess.Persistence.Contexts;
 using Domain.Entities;
-using Infrastructure;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Api.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = SD.Role_Admin)]
+[Authorize(Roles = UserRoles.Role_Admin)]
 
 public class HomeController : Controller
 {
@@ -69,12 +69,12 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-        if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
+        if (!_roleManager.RoleExistsAsync(UserRoles.Role_Customer).GetAwaiter().GetResult())
         {
-            _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Customer)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Employee)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Admin)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Company)).GetAwaiter().GetResult();
         }
         var user_us = _userManager.Users.Where(x => x.UserName == username).FirstOrDefault();
         var inrole = _userManager.GetRolesAsync(user_us).Result.FirstOrDefault();

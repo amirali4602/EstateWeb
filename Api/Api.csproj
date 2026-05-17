@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Properties\launchSettings.json" />
     <None Include="Views\Shared\_backupHeader.cshtml" />
     <None Include="wwwroot\fonts\IranSans\woff2\IRANSansWeb(FaNum).woff2" />
@@ -54,8 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
